@@ -1,0 +1,277 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>fslib3.WPF</name>
+    </assembly>
+    <members>
+        <member name="T:fslib3.WPF.Behaviors.BehaviorBase`1">
+            <summary>
+            <see cref="T:Microsoft.Xaml.Behaviors.Behavior`1"/>の基本実装クラス
+            </summary>
+            <typeparam name="T">対象となる<see cref="T:System.Windows.DependencyObject"/>の型</typeparam>
+        </member>
+        <member name="M:fslib3.WPF.Behaviors.BehaviorBase`1.#ctor">
+            <summary>
+            <see cref="T:fslib3.WPF.Behaviors.BehaviorBase`1"/>の新しいインスタンスを生成する
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.Behaviors.BehaviorBase`1.RegisterProperty``2(System.String,``1,System.Windows.PropertyChangedCallback)">
+            <summary>
+            プロパティを追加する
+            </summary>
+            <typeparam name="TOwner">登録するプロパティを持つ<see cref="T:fslib3.WPF.Behaviors.BehaviorBase`1"/>の型</typeparam>
+            <typeparam name="TProp">プロパティの型</typeparam>
+            <param name="propertyName">プロパティ名</param>
+            <param name="defaultValue">最初に設定される値</param>
+            <param name="callback">コールバック関数</param>
+            <exception cref="T:System.ArgumentException"><paramref name="defaultValue"/>が<see cref="F:System.Windows.DependencyProperty.UnsetValue"/>だった</exception>
+            <returns>登録されたプロパティ情報に基づく<see cref="T:System.Windows.DependencyProperty"/>の新しいインスタンス</returns>
+        </member>
+        <member name="T:fslib3.WPF.Controls.NumericUpDown">
+            <summary>
+            <see cref="T:System.Windows.Forms.NumericUpDown"/>をWPFに対応させたクラス
+            </summary>
+            <summary>
+            NumericUpDown
+            </summary>
+        </member>
+        <member name="P:fslib3.WPF.Controls.NumericUpDown.Increment">
+            <summary>
+            <see cref="P:fslib3.WPF.Controls.NumericUpDown.Value"/>の増減量を取得または設定する
+            </summary>
+        </member>
+        <member name="P:fslib3.WPF.Controls.NumericUpDown.Maximum">
+            <summary>
+            <see cref="P:fslib3.WPF.Controls.NumericUpDown.Value"/>の最大値を取得または設定する
+            </summary>
+        </member>
+        <member name="P:fslib3.WPF.Controls.NumericUpDown.Minimum">
+            <summary>
+            <see cref="P:fslib3.WPF.Controls.NumericUpDown.Value"/>の最小値を取得または設定する
+            </summary>
+        </member>
+        <member name="P:fslib3.WPF.Controls.NumericUpDown.ThousandsSeparator">
+            <summary>
+            3桁頃に区切るかどうかを取得または設定する
+            </summary>
+        </member>
+        <member name="P:fslib3.WPF.Controls.NumericUpDown.Value">
+            <summary>
+            格納されている値を取得または設定する
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.Controls.NumericUpDown.#ctor">
+            <summary>
+            <see cref="T:fslib3.WPF.Controls.NumericUpDown"/>の新しいインスタンスを生成する
+            </summary>
+        </member>
+        <member name="E:fslib3.WPF.Controls.NumericUpDown.PropertyChanged">
+            <summary>
+            プロパティが変更された時に実行
+            </summary>
+        </member>
+        <member name="E:fslib3.WPF.Controls.NumericUpDown.ValueChanged">
+            <summary>
+            <see cref="P:fslib3.WPF.Controls.NumericUpDown.Value"/>が変更された時に実行
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.Controls.NumericUpDown.DownButton">
+            <summary>
+            <see cref="P:fslib3.WPF.Controls.NumericUpDown.Value"/>を減少させる
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.Controls.NumericUpDown.UpButton">
+            <summary>
+            <see cref="P:fslib3.WPF.Controls.NumericUpDown.Value"/>を増加させる
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.Controls.NumericUpDown.OnPropertyChanged(System.String)">
+            <summary>
+            指定したプロパティ名で<see cref="E:fslib3.WPF.Controls.NumericUpDown.PropertyChanged"/>を実行する
+            </summary>
+            <param name="propertyName">変更されたプロパティ名</param>
+        </member>
+        <member name="M:fslib3.WPF.Controls.NumericUpDown.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+            <see cref="E:fslib3.WPF.Controls.NumericUpDown.PropertyChanged"/>を実行する
+            </summary>
+            <param name="e">使用するイベントの情報</param>
+        </member>
+        <member name="M:fslib3.WPF.Controls.NumericUpDown.OnValueChanged(System.EventArgs)">
+            <summary>
+            <see cref="E:fslib3.WPF.Controls.NumericUpDown.ValueChanged"/>を実行する
+            </summary>
+            <param name="e">使用するイベントの情報</param>
+        </member>
+        <member name="M:fslib3.WPF.Controls.NumericUpDown.SetUpBind">
+            <summary>
+            bypassData と <see cref="T:System.Windows.Forms.NumericUpDown"/> のバインド
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.Controls.NumericUpDown.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:fslib3.WPF.FsViewModelBase">
+            <summary>
+            ViewModelの基底クラス
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.FsViewModelBase.#ctor">
+            <summary>
+            <see cref="T:fslib3.WPF.FsViewModelBase"/>の新しいインスタンスを生成する
+            </summary>
+        </member>
+        <member name="E:fslib3.WPF.FsViewModelBase.PropertyChanged">
+            <summary>
+            プロパティが変更されたときに実行される
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.FsViewModelBase.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+            <see cref="E:fslib3.WPF.FsViewModelBase.PropertyChanged"/>を実行する
+            </summary>
+            <param name="e">使用するイベントの引数</param>
+        </member>
+        <member name="M:fslib3.WPF.FsViewModelBase.InitializeCommands">
+            <summary>
+            コマンドを初期化する
+            </summary>
+        </member>
+        <member name="T:fslib3.WPF.BoolReverseConverter">
+            <summary>
+            <see cref="T:System.Boolean"/>の値を逆転させるコンバータのクラス
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.BoolReverseConverter.#ctor">
+            <summary>
+            <see cref="T:fslib3.WPF.BoolReverseConverter"/>の新しいインスタンスを生成する
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.BoolReverseConverter.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:fslib3.WPF.BoolReverseConverter.GetHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:fslib3.WPF.BoolReverseConverter.TryConvert(System.Boolean,System.Object,System.Boolean@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:fslib3.WPF.BoolReverseConverter.TryConvertBack(System.Boolean,System.Object,System.Boolean@)">
+            <inheritdoc/>
+        </member>
+        <member name="T:fslib3.WPF.GenericValueConverterBase`2">
+            <summary>
+            ジェネリックな値のコンバータの基底クラス
+            </summary>
+            <typeparam name="TInput">入力される値の型</typeparam>
+            <typeparam name="TOutput">出力される値の型</typeparam>
+        </member>
+        <member name="M:fslib3.WPF.GenericValueConverterBase`2.#ctor">
+            <summary>
+            <see cref="T:fslib3.WPF.GenericValueConverterBase`2"/>の新しいインスタンスを生成する
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.GenericValueConverterBase`2.Create(System.Func{`0,System.Object,`1},System.Func{`1,System.Object,`0})">
+            <summary>
+            関数を基に<see cref="T:fslib3.WPF.GenericValueConverterBase`2"/>の新しいインスタンスを生成する
+            </summary>
+            <param name="converter">変換に使用する関数</param>
+            <param name="backConverter">逆変換に使用する関数</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="converter"/>または<paramref name="backConverter"/>がnull</exception>
+            <returns><paramref name="converter"/>と<paramref name="backConverter"/>を基にした<see cref="T:fslib3.WPF.GenericValueConverterBase`2"/>の新しいインスタンス</returns>
+        </member>
+        <member name="M:fslib3.WPF.GenericValueConverterBase`2.Convert(`0,System.Object)">
+            <summary>
+            値を変換する
+            </summary>
+            <param name="value">変換する値</param>
+            <param name="parameter">変換に使用するパラメータ</param>
+            <exception cref="T:System.ArgumentException">無効な型が渡された</exception>
+            <returns>変換された結果</returns>
+        </member>
+        <member name="M:fslib3.WPF.GenericValueConverterBase`2.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:fslib3.WPF.GenericValueConverterBase`2.ConvertBack(`1,System.Object)">
+            <summary>
+            値を逆変換する
+            </summary>
+            <param name="value">変換する値</param>
+            <param name="parameter">変換に使用するパラメータ</param>
+            <exception cref="T:System.ArgumentException">無効な型が渡された</exception>
+            <returns>変換後の値</returns>
+        </member>
+        <member name="M:fslib3.WPF.GenericValueConverterBase`2.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:fslib3.WPF.GenericValueConverterBase`2.GetReverse">
+            <summary>
+            逆変換を行う<see cref="T:fslib3.WPF.GenericValueConverterBase`2"/>の新しいインスタンスを取得する
+            </summary>
+            <returns>逆変換を行う<see cref="T:fslib3.WPF.GenericValueConverterBase`2"/>の新しいインスタンス</returns>
+        </member>
+        <member name="M:fslib3.WPF.GenericValueConverterBase`2.TryConvert(`0,System.Object,`1@)">
+            <summary>
+            値を変換する
+            </summary>
+            <param name="value">変換する値</param>
+            <param name="parameter">変換に使用するパラメータ</param>
+            <param name="result">変換された結果</param>
+            <returns>変換出来たら<see langword="true"/>，それ以外で<see langword="false"/></returns>
+        </member>
+        <member name="M:fslib3.WPF.GenericValueConverterBase`2.TryConvertBack(`1,System.Object,`0@)">
+            <summary>
+            値を逆変換する
+            </summary>
+            <param name="value">変換する値</param>
+            <param name="parameter">変換に使用するパラメータ</param>
+            <param name="result">変換後の値</param>
+            <returns>変換出来たら<see langword="true"/>，それ以外で<see langword="false"/></returns>
+        </member>
+        <member name="T:fslib3.WPF.MultiValueConverter">
+            <summary>
+            複数の値を変換するコンバータのクラス
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.MultiValueConverter.#ctor">
+            <summary>
+            <see cref="T:fslib3.WPF.MultiValueConverter"/>の新しいインスタンスを生成する
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.MultiValueConverter.Convert(System.Object[],System.Object)">
+            
+        </member>
+        <member name="T:fslib3.WPF.ValueConverterBase">
+            <summary>
+            値のコンバータの基底クラス
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.ValueConverterBase.#ctor">
+            <summary>
+            <see cref="T:fslib3.WPF.ValueConverterBase"/>の新しいインスタンスを生成する
+            </summary>
+        </member>
+        <member name="M:fslib3.WPF.ValueConverterBase.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            値を変換する
+            </summary>
+            <param name="value">変換する値</param>
+            <param name="targetType">変換先の型</param>
+            <param name="parameter">変換に使用するパラメータ</param>
+            <param name="culture">変換に使用されるカルチャ</param>
+            <returns>変換後の値</returns>
+        </member>
+        <member name="M:fslib3.WPF.ValueConverterBase.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            値を逆変換する
+            </summary>
+            <param name="value">変換する値</param>
+            <param name="targetType">変換先の型</param>
+            <param name="parameter">変換に使用するパラメータ</param>
+            <param name="culture">変換に使用されるカルチャ</param>
+            <returns>変換後の値</returns>
+        </member>
+    </members>
+</doc>
