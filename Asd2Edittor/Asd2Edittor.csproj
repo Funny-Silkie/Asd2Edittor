@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutPutType>WinExe</OutPutType>
+    <TargetFrameWork>net5.0-windows</TargetFrameWork>
+    <OutputPath>$(SolutionDir)Build\$(Configuration)</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="fslib3">
+      <HintPath>..\lib\$(Configuration)\fslib3.dll</HintPath>
+    </Reference>
+    <Reference Include="fslib3.WPF">
+      <HintPath>..\lib\$(Configuration)\fslib3.WPF.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Altseed2" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
+    <PackageReference Include="ReactiveProperty.WPF" Version="7.12.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AsdEdittor.Core\AsdEdittor.Core.csproj" />
+  </ItemGroup>
+</Project>
