@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Asd2Edittor", "Asd2Edittor\Asd2Edittor.csproj", "{D9FDEC07-B8B2-B03C-6BD0-050246163E60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsdEdittor.Core", "AsdEdittor.Core\AsdEdittor.Core.csproj", "{34607D1D-DB11-4791-8441-54BEB79417FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsdEdittor.Core", "AsdEdittor.Core\AsdEdittor.Core.csproj", "{34607D1D-DB11-4791-8441-54BEB79417FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

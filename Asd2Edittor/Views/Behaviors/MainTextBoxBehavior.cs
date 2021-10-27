@@ -1,24 +1,23 @@
 ﻿using Asd2Edittor.Messangers;
+using System.Windows.Controls;
 
 namespace Asd2Edittor.Views.Behaviors
 {
-    public class MainWindowBehavior : RxMessageBehavior<MainWindow>
+    public class MainTextBoxBehavior : RxMessageBehavior<TextBox>
     {
-        public MainWindowBehavior()
+        public MainTextBoxBehavior()
         {
 
         }
-        #region Messanger
         protected override void MessangerOnNext(MessageInfo message)
         {
             if (message is not TypedMessage m) return;
             switch (m.MessageType)
             {
-                case MessageType.CloseWindow:
-                    AssociatedObject.Close();
+                case MessageType.UpdateText:
+                    AssociatedObject.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                     break;
             }
         }
-        #endregion
     }
 }

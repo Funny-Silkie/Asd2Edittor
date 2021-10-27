@@ -1,6 +1,7 @@
-﻿using Asd2Edittor.Models;
+﻿using Asd2Edittor.Messangers;
 using fslib3;
 using fslib3.WPF;
+using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Asd2Edittor.ViewModels
 {
     public class MainWindowViewModel : FsViewModelBase
     {
+        public ReactiveProperty<string> Text { get; } = new ReactiveProperty<string>();
         public MainWindowViewModel()
         {
 
@@ -19,7 +21,12 @@ namespace Asd2Edittor.ViewModels
         protected override void InitializeCommands()
         {
             base.InitializeCommands();
-
+            CloseWindow.Subscribe(CommandCloseWindow);
+        }
+        public ReactiveCommand CloseWindow { get; } = new ReactiveCommand();
+        private void CommandCloseWindow()
+        {
+            RxMessanger.Default.Send(MessageType.CloseWindow);
         }
         #endregion
     }

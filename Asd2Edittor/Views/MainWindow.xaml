@@ -11,39 +11,43 @@
         xmlns:fsbeh="clr-namespace:fslib3.WPF.Behaviors;assembly=fslib3.WPF"
         mc:Ignorable="d"
         x:Name="window"
-        Background="#F0F0F0" Title="MainWindow" Height="450" Width="800">
+        Background="#F0F0F0" Title="Altseed2 UIエディタ" Height="450" Width="800">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Window.Resources>
     </Window.Resources>
     <bh:Interaction.Behaviors>
-        <beh:MainWindowBehavior x:Name="WindowBehavior"/>
+        <beh:MainWindowBehavior/>
     </bh:Interaction.Behaviors>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
+        <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
             <MenuItem Header="ファイル(_F)">
                 <MenuItem Header="新規(_N)" InputGestureText="Ctrl+N"/>
                 <MenuItem Header="開く(_O)" InputGestureText="Ctrl+O"/>
                 <MenuItem Header="上書き保存(_S)" InputGestureText="Ctrl+S"/>
                 <MenuItem Header="名前を付けて保存(_A)" InputGestureText="Ctrl+Shift+S"/>
                 <Separator/>
-                <MenuItem Header="終了(_X)" Command="{Binding ElementName=WindowBehavior, Path=CloseWindow}"/>
+                <MenuItem Header="終了(_X)" Command="{Binding Path=CloseWindow}"/>
             </MenuItem>
             <MenuItem Header="編集(_E)">
-                
+
             </MenuItem>
             <MenuItem Header="表示(_V)">
-                
+
             </MenuItem>
         </Menu>
-        
+        <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Path=Text.Value, UpdateSourceTrigger=Explicit}"/>
     </Grid>
     <Window.InputBindings>
-        <KeyBinding Gesture="Ctrl+W" Command="{Binding ElementName=WindowBehavior, Path=CloseWindow}"/>
+        <KeyBinding Gesture="Ctrl+W" Command="{Binding Path=CloseWindow}"/>
     </Window.InputBindings>
 </Window>
