@@ -46,8 +46,12 @@
             </MenuItem>
         </Menu>
         <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Path=Text.Value, UpdateSourceTrigger=Explicit}"/>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <TreeView />
+        </Grid>
     </Grid>
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+W" Command="{Binding Path=CloseWindow}"/>
+        <KeyBinding Gesture="F5" Command="{Binding Path=UpdateText}"/>
     </Window.InputBindings>
 </Window>
