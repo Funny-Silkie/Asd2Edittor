@@ -11,7 +11,7 @@
         xmlns:fsbeh="clr-namespace:fslib3.WPF.Behaviors;assembly=fslib3.WPF"
         mc:Ignorable="d"
         x:Name="window"
-        Background="#F0F0F0" Title="Altseed2 UIエディタ" Height="450" Width="800">
+        Background="#202020" Title="Altseed2 UIエディタ" Height="450" Width="800">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -28,8 +28,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
+        <Menu Background="Transparent" Foreground="White" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
             <MenuItem Header="ファイル(_F)">
                 <MenuItem Header="新規(_N)" InputGestureText="Ctrl+N"/>
                 <MenuItem Header="開く(_O)" InputGestureText="Ctrl+O"/>
@@ -46,9 +47,18 @@
             </MenuItem>
         </Menu>
         <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Path=Text.Value, UpdateSourceTrigger=Explicit}"/>
-        <Grid Grid.Column="1" Grid.Row="1">
-            <TreeView />
-        </Grid>
+        <TreeView Grid.Column="1" Background="Transparent" Grid.Row="1" ItemsSource="{Binding Path=Root.Children}">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="vm:FilePathViewModel" ItemsSource="{Binding Path=Children}">
+                    <TextBlock Foreground="White" Text="{Binding Path=Name.Value}"/>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem">
+                    
+                </Style>
+            </TreeView.ItemContainerStyle>
+        </TreeView>
     </Grid>
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+W" Command="{Binding Path=CloseWindow}"/>
