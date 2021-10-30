@@ -1,6 +1,5 @@
 ﻿using Asd2Edittor.Messangers;
 using Asd2Edittor.Models;
-using fslib3;
 using fslib3.WPF;
 using Reactive.Bindings;
 using System;
@@ -8,8 +7,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Windows;
-using System.Windows.Input;
 
 namespace Asd2Edittor.ViewModels
 {
@@ -54,9 +51,9 @@ namespace Asd2Edittor.ViewModels
                 }
             }
         }
-        private void WatcherCreated(FileSystemEventArgs e)
+        private void OnCreateFile(string path)
         {
-            var names = Path.GetFullPath(e.FullPath)
+            var names = Path.GetFullPath(path)
                 .Replace('/', '\\')
                 .Replace(Root.FullPath, string.Empty)
                 .Split('\\')
@@ -82,17 +79,21 @@ namespace Asd2Edittor.ViewModels
                 }
             }
         }
-        private void WatcherDeleted(FileSystemEventArgs e)
+        private void OnDeleteFile(string path)
         {
-            var path = Path.GetFullPath(e.FullPath.Replace('/', '\\').Replace(Root.FullPath, string.Empty));
+            path = Path.GetFullPath(path)
+                .Replace('/', '\\')
+                .Replace(Root.FullPath, string.Empty);
             var vm = FindFile(path);
             if (vm == Root) return;
             vm.Parent.Value.RemoveChild(vm);
         }
+        private void WatcherCreated(FileSystemEventArgs e) => OnCreateFile(e.FullPath);
+        private void WatcherDeleted(FileSystemEventArgs e) => OnDeleteFile(e.FullPath);
         private void WatcherRenamed(RenamedEventArgs e)
         {
-            WatcherCreated(e.OldFullPath);
-            WatcherCreated(e.FullPath);
+            OnDeleteFile(e.OldFullPath);
+            OnCreateFile(e.FullPath);
         }
         private void OnWatchPathChanged(string value)
         {
@@ -120,6 +121,7 @@ namespace Asd2Edittor.ViewModels
         {
             RxMessanger.Default.Send(MessageType.UpdateText);
         }
+        System.Windows.Controls.TextBlock
         public ReactiveCommand CloseWindow { get; } = new ReactiveCommand();
         private void CommandCloseWindow()
         {

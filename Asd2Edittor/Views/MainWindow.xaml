@@ -50,14 +50,20 @@
         <TreeView Grid.Column="1" Background="Transparent" Grid.Row="1" ItemsSource="{Binding Path=Root.Children}">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="vm:FilePathViewModel" ItemsSource="{Binding Path=Children}">
-                    <TextBlock Foreground="White" Text="{Binding Path=Name.Value}"/>
+                    <TextBlock Foreground="White" Text="{Binding Path=Name.Value}">
+                        <bh:Interaction.Triggers>
+                            
+                        </bh:Interaction.Triggers>
+                    </TextBlock>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
-            <TreeView.ItemContainerStyle>
+            <!--<TreeView.ItemContainerStyle>
                 <Style TargetType="TreeViewItem">
-                    
+                    <Style.Setters>
+                        <EventSetter Event="MouseDoubleClick" Handler="TreeViewItem_MouseDoubleClick"/>
+                    </Style.Setters>
                 </Style>
-            </TreeView.ItemContainerStyle>
+            </TreeView.ItemContainerStyle>-->
         </TreeView>
     </Grid>
     <Window.InputBindings>
