@@ -19,5 +19,9 @@ namespace Asd2Edittor.Views
         {
             InitializeComponent();
         }
+        private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

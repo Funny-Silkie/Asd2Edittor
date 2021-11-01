@@ -11,11 +11,15 @@
         xmlns:fsbeh="clr-namespace:fslib3.WPF.Behaviors;assembly=fslib3.WPF"
         mc:Ignorable="d"
         x:Name="window"
-        Background="#202020" Title="Altseed2 UIエディタ" Height="450" Width="800">
+        Background="{DynamicResource  ResourceKey=BGColor}" Title="Altseed2 UIエディタ" Height="450" Width="800">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Window.Resources>
+        <!--<Brush x:Key="BGColor">#202020</Brush>
+        <Brush x:Key="TextColor">White</Brush>-->
+        <Brush x:Key="BGColor">#F0F0F0</Brush>
+        <Brush x:Key="TextColor">Black</Brush>
     </Window.Resources>
     <bh:Interaction.Behaviors>
         <beh:MainWindowBehavior/>
@@ -30,7 +34,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Menu Background="Transparent" Foreground="White" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
+        <Menu Background="Transparent" Foreground="{DynamicResource ResourceKey=TextColor}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
             <MenuItem Header="ファイル(_F)">
                 <MenuItem Header="新規(_N)" InputGestureText="Ctrl+N"/>
                 <MenuItem Header="開く(_O)" InputGestureText="Ctrl+O"/>
@@ -50,20 +54,24 @@
         <TreeView Grid.Column="1" Background="Transparent" Grid.Row="1" ItemsSource="{Binding Path=Root.Children}">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="vm:FilePathViewModel" ItemsSource="{Binding Path=Children}">
-                    <TextBlock Foreground="White" Text="{Binding Path=Name.Value}">
-                        <bh:Interaction.Triggers>
-                            
-                        </bh:Interaction.Triggers>
-                    </TextBlock>
+                    <TextBlock Foreground="{DynamicResource ResourceKey=TextColor}" Text="{Binding Path=Name.Value}"/>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
-            <!--<TreeView.ItemContainerStyle>
+            <TreeView.ItemContainerStyle>
                 <Style TargetType="TreeViewItem">
                     <Style.Setters>
                         <EventSetter Event="MouseDoubleClick" Handler="TreeViewItem_MouseDoubleClick"/>
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="開く(_O)" Command="{Binding Path=OpenFile}"/>
+                                    <MenuItem Header="削除(_D)" Command="{Binding Path=DeleteFile}"/>
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
                     </Style.Setters>
                 </Style>
-            </TreeView.ItemContainerStyle>-->
+            </TreeView.ItemContainerStyle>
         </TreeView>
     </Grid>
     <Window.InputBindings>

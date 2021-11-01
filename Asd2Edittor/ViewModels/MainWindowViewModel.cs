@@ -21,8 +21,8 @@ namespace Asd2Edittor.ViewModels
         private ReactiveProperty<string> WatchPath { get; } = new ReactiveProperty<string>("./");
         public MainWindowViewModel()
         {
-            //Text.Subscribe(x => MessageBox.Show(x));
             WatchPath.Subscribe(OnWatchPathChanged);
+            RxMessanger.Default.Subscribe(OnGetMessage);
             Common.SubscribeEvent<ErrorEventHandler, ErrorEventArgs>(x => x.Invoke, x => watcher.Error += x, x => watcher.Error -= x, x => throw new InvalidOperationException(x.ToString()));
             Common.SubscribeEvent<FileSystemEventHandler, FileSystemEventArgs>(x => x.Invoke, x => watcher.Created += x, x => watcher.Created -= x, WatcherCreated);
             Common.SubscribeEvent<FileSystemEventHandler, FileSystemEventArgs>(x => x.Invoke, x => watcher.Deleted += x, x => watcher.Deleted -= x, WatcherDeleted);
@@ -58,6 +58,7 @@ namespace Asd2Edittor.ViewModels
                 .Replace(Root.FullPath, string.Empty)
                 .Split('\\')
                 .ToArray();
+            if (names.Any(x => x.Contains(':'))) return;
             var i = 0;
             var fm = Root;
             while (true)
@@ -66,7 +67,7 @@ namespace Asd2Edittor.ViewModels
                 var child = fm.Children.FirstOrDefault(x => x.Name.Value == names[i]);
                 if (child == null)
                 {
-                    var vm = new FilePathViewModel(names[i]);
+                    var vm = new FilePathViewModel(this, names[i]);
                     fm.AddChild(vm);
                     if (!File.Exists(vm.FullPath)) vm.Reset(vm.FullPath);
                     return;
@@ -92,8 +93,8 @@ namespace Asd2Edittor.ViewModels
         private void WatcherDeleted(FileSystemEventArgs e) => OnDeleteFile(e.FullPath);
         private void WatcherRenamed(RenamedEventArgs e)
         {
-            OnDeleteFile(e.OldFullPath);
             OnCreateFile(e.FullPath);
+            OnDeleteFile(e.OldFullPath);
         }
         private void OnWatchPathChanged(string value)
         {
@@ -102,11 +103,15 @@ namespace Asd2Edittor.ViewModels
             var fp = Path.GetFullPath(value)
                 .Replace('/', '\\')
                 .TrimEnd('\\');
-            if (Root == null) Root = new FilePathViewModel(fp.Split('\\')[^1]);
+            if (Root == null) Root = new FilePathViewModel(this, fp.Split('\\')[^1]) { IsFolder = true };
             else Root.Name.Value = fp.Split('\\')[^1];
             watcher.Path = fp;
             Root.Reset(fp);
             watcher.EnableRaisingEvents = true;
+        }
+        private void OnGetMessage(MessageInfo info)
+        {
+
         }
         #region Commands
         protected override void InitializeCommands()
@@ -121,7 +126,6 @@ namespace Asd2Edittor.ViewModels
         {
             RxMessanger.Default.Send(MessageType.UpdateText);
         }
-        System.Windows.Controls.TextBlock
         public ReactiveCommand CloseWindow { get; } = new ReactiveCommand();
         private void CommandCloseWindow()
         {
