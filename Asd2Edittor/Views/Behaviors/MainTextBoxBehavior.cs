@@ -38,10 +38,36 @@ namespace Asd2Edittor.Views.Behaviors
             currentEntered = e.Text;
             switch (currentEntered)
             {
-                case "<":
                 case "/":
-                    AssociatedObject.InsertText(">"); break;
+                    AssociatedObject.InsertText("/>");
+                    AssociatedObject.CaretIndex += 2;
+                    e.Handled = true;
+                    break;
                 case "\"": AssociatedObject.InsertText("\""); break;
+                case ">":
+                    var start = AssociatedObject.CaretIndex;
+                    for (int i = start - 1; i >= 0; i--)
+                        if (AssociatedObject.Text[i] == '<')
+                        {
+                            start = i;
+                            break;
+                        }
+                    var count = 0;
+                    for (int i = start + 1; i < AssociatedObject.CaretIndex; i++)
+                    {
+                        if (AssociatedObject.Text[i] is '>' or ' ') break;
+                        count++;
+                    }
+                    var name = AssociatedObject.Text.Substring(start + 1, count);
+                    AssociatedObject.InsertText($"></{name}>");
+                    AssociatedObject.CaretIndex++;
+                    e.Handled = true;
+                    break;
+                case "=":
+                    AssociatedObject.InsertText("=\"\"");
+                    AssociatedObject.CaretIndex += 2;
+                    e.Handled = true;
+                    break;
             }
         }
         private void KeyDown(object sender, KeyEventArgs e)
