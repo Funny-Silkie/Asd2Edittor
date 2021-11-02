@@ -1,6 +1,7 @@
 using Asd2Edittor.Messangers;
 using Asd2Edittor.Models;
 using fslib3.WPF;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using Reactive.Bindings;
 using System;
 using System.ComponentModel;
@@ -17,7 +18,8 @@ namespace Asd2Edittor.ViewModels
             IncludeSubdirectories = true
         };
         public static MainWindowViewModel Current { get; } = new MainWindowViewModel();
-        public FilePathViewModel Root { get; private set; }
+        public FilePathViewModel Root => Files.FirstOrDefault();
+        public ReactiveCollection<FilePathViewModel> Files { get; } = new ReactiveCollection<FilePathViewModel>();
         public ReactiveProperty<string> Text { get; } = new ReactiveProperty<string>();
         public ReactiveProperty<string> WatchPath { get; } = new ReactiveProperty<string>();
         public MainWindowViewModel()
@@ -28,7 +30,6 @@ namespace Asd2Edittor.ViewModels
             Common.SubscribeEvent<FileSystemEventHandler, FileSystemEventArgs>(x => x.Invoke, x => watcher.Created += x, x => watcher.Created -= x, WatcherCreated);
             Common.SubscribeEvent<FileSystemEventHandler, FileSystemEventArgs>(x => x.Invoke, x => watcher.Deleted += x, x => watcher.Deleted -= x, WatcherDeleted);
             Common.SubscribeEvent<RenamedEventHandler, RenamedEventArgs>(x => x.Invoke, x => watcher.Renamed += x, x => watcher.Renamed -= x, WatcherRenamed);
-            WatchPath.Value = Environment.CurrentDirectory;
         }
         private FilePathViewModel FindFile(string path)
         {
@@ -105,7 +106,8 @@ namespace Asd2Edittor.ViewModels
             var fp = Path.GetFullPath(value)
                 .Replace('/', '\\')
                 .TrimEnd('\\');
-            if (Root == null) Root = new FilePathViewModel(this, fp.Split('\\')[^1]) { IsFolder = true };
+            Files.Clear();
+            if (Root == null) Files.Add(new FilePathViewModel(this, fp.Split('\\')[^1]) { IsFolder = true });
             else Root.Name.Value = fp.Split('\\')[^1];
             watcher.Path = fp;
             Root.Reset(fp);
@@ -120,6 +122,7 @@ namespace Asd2Edittor.ViewModels
         {
             base.InitializeCommands();
             UpdateText.Subscribe(CommandUpdateText);
+            MenuFileOpen.Subscribe(CommandMenuFileOpen);
             CloseWindow.Subscribe(CommandCloseWindow);
             OnWindowClosing.Subscribe(CommandOnWindowClosing);
         }
@@ -127,6 +130,18 @@ namespace Asd2Edittor.ViewModels
         private void CommandUpdateText()
         {
             RxMessanger.Default.Send(MessageType.UpdateText);
+        }
+        public ReactiveCommand MenuFileOpen { get; } = new ReactiveCommand();
+        private void CommandMenuFileOpen()
+        {
+            var dialog = new CommonOpenFileDialog
+            {
+                EnsurePathExists = true,
+                IsFolderPicker = true,
+                Multiselect = false,
+            };
+            if (dialog.ShowDialog() != CommonFileDialogResult.Ok) return;
+            WatchPath.Value = dialog.FileName;
         }
         public ReactiveCommand CloseWindow { get; } = new ReactiveCommand();
         private void CommandCloseWindow()
