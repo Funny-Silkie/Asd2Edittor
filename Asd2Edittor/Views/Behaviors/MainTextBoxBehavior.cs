@@ -52,13 +52,13 @@ namespace Asd2Edittor.Views.Behaviors
                     switch (e.Key)
                     {
                         case Key.D:
-                            CopyLine();
+                            CtrlD();
                             break;
                     }
                     break;
             }
         }
-        private void CopyLine()
+        private void CtrlD()
         {
             var (x, y) = AssociatedObject.GetCaretPosition();
             var line = AssociatedObject.GetLineText(y);
