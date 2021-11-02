@@ -10,6 +10,9 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="fslib3">
       <HintPath>..\lib\$(Configuration)\fslib3.dll</HintPath>
     </Reference>

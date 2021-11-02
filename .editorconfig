@@ -1,0 +1,19 @@
+﻿[*.cs]
+
+# IDE0090: 'new(...)' を使用する
+dotnet_diagnostic.IDE0090.severity = none
+
+# IDE0008: 明示的な型の使用
+dotnet_diagnostic.IDE0008.severity = silent
+
+# IDE0011: 波かっこを追加します
+dotnet_diagnostic.IDE0011.severity = silent
+
+# IDE0022: メソッドに式本体を使用する
+dotnet_diagnostic.IDE0022.severity = silent
+
+# IDE0021: コンストラクターに式本体を使用する
+dotnet_diagnostic.IDE0021.severity = silent
+
+# IDE0058: 式の値が使用されていません
+dotnet_diagnostic.IDE0058.severity = none
