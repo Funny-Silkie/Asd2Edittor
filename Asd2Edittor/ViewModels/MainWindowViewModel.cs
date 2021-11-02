@@ -1,4 +1,4 @@
-﻿using Asd2Edittor.Messangers;
+using Asd2Edittor.Messangers;
 using Asd2Edittor.Models;
 using fslib3.WPF;
 using Reactive.Bindings;
@@ -16,9 +16,10 @@ namespace Asd2Edittor.ViewModels
         {
             IncludeSubdirectories = true
         };
+        public static MainWindowViewModel Current { get; } = new MainWindowViewModel();
         public FilePathViewModel Root { get; private set; }
         public ReactiveProperty<string> Text { get; } = new ReactiveProperty<string>();
-        private ReactiveProperty<string> WatchPath { get; } = new ReactiveProperty<string>("./");
+        public ReactiveProperty<string> WatchPath { get; } = new ReactiveProperty<string>();
         public MainWindowViewModel()
         {
             WatchPath.Subscribe(OnWatchPathChanged);
@@ -27,6 +28,7 @@ namespace Asd2Edittor.ViewModels
             Common.SubscribeEvent<FileSystemEventHandler, FileSystemEventArgs>(x => x.Invoke, x => watcher.Created += x, x => watcher.Created -= x, WatcherCreated);
             Common.SubscribeEvent<FileSystemEventHandler, FileSystemEventArgs>(x => x.Invoke, x => watcher.Deleted += x, x => watcher.Deleted -= x, WatcherDeleted);
             Common.SubscribeEvent<RenamedEventHandler, RenamedEventArgs>(x => x.Invoke, x => watcher.Renamed += x, x => watcher.Renamed -= x, WatcherRenamed);
+            WatchPath.Value = Environment.CurrentDirectory;
         }
         private FilePathViewModel FindFile(string path)
         {
@@ -69,7 +71,7 @@ namespace Asd2Edittor.ViewModels
                 {
                     var vm = new FilePathViewModel(this, names[i]);
                     fm.AddChild(vm);
-                    if (!File.Exists(vm.FullPath)) vm.Reset(vm.FullPath);
+                    if (vm.FullPath.EndsWith('\\')) vm.Reset(vm.FullPath);
                     return;
                 }
                 else

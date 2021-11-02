@@ -18,6 +18,7 @@ namespace Asd2Edittor.ViewModels
         public ReactiveProperty<string> Name { get; } = new ReactiveProperty<string>();
         public ReadOnlyReactiveProperty<FilePathViewModel> Parent { get; }
         private readonly ReactiveProperty<FilePathViewModel> _Parent = new ReactiveProperty<FilePathViewModel>();
+        public string FullPath => $"{MainWindowViewModel.Current.WatchPath.Value}\\{string.Join('\\', EnumerateAncestors().SkipLast(1).Reverse())}";
         static FilePathViewModel()
         {
             comparer = Comparer<FilePathViewModel>.Create((x, y) => string.Compare(x?.Name?.Value, y?.Name?.Value));
@@ -60,7 +61,6 @@ namespace Asd2Edittor.ViewModels
                     return Children[i];
             return null;
         }
-        public string FullPath => $"{AppDomain.CurrentDomain.BaseDirectory}{string.Join('\\', EnumerateAncestors().SkipLast(1).Reverse())}";
         public void RemoveChild(FilePathViewModel vm)
         {
             if (vm.Parent.Value != this) throw new ArgumentException("Parent is not this instance");

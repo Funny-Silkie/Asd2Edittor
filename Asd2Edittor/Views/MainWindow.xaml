@@ -11,10 +11,7 @@
         xmlns:fsbeh="clr-namespace:fslib3.WPF.Behaviors;assembly=fslib3.WPF"
         mc:Ignorable="d"
         x:Name="window"
-        Background="{DynamicResource  ResourceKey=BGColor}" Title="Altseed2 UIエディタ" Height="450" Width="800">
-    <Window.DataContext>
-        <vm:MainWindowViewModel/>
-    </Window.DataContext>
+        Background="{DynamicResource ResourceKey=BGColor}" DataContext="{x:Static vm:MainWindowViewModel.Current}" Title="Altseed2 UIエディタ" Height="450" Width="800">
     <Window.Resources>
         <!--<Brush x:Key="BGColor">#202020</Brush>
         <Brush x:Key="TextColor">White</Brush>-->
