@@ -47,7 +47,11 @@
 
             </MenuItem>
         </Menu>
-        <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Path=Text.Value, UpdateSourceTrigger=Explicit}"/>
+        <TextBox Grid.Column="0" Grid.Row="1" AcceptsReturn="True" AcceptsTab="True" Text="{Binding Path=Text.Value, UpdateSourceTrigger=Explicit}">
+            <bh:Interaction.Behaviors>
+                <beh:MainTextBoxBehavior/>
+            </bh:Interaction.Behaviors>
+        </TextBox>
         <TreeView Grid.Column="1" Background="Transparent" Grid.Row="1" ItemsSource="{Binding Path=Files}">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="vm:FilePathViewModel" ItemsSource="{Binding Path=Children}">
