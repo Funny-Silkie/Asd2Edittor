@@ -17,3 +17,9 @@ dotnet_diagnostic.IDE0021.severity = silent
 
 # IDE0058: 式の値が使用されていません
 dotnet_diagnostic.IDE0058.severity = none
+
+# IDE0010: 欠落しているケースの追加
+dotnet_diagnostic.IDE0010.severity = silent
+
+# IDE0130: Namespace がフォルダー構造と一致しません
+dotnet_diagnostic.IDE0130.severity = none

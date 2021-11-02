@@ -1,5 +1,4 @@
 ﻿using Asd2Edittor.Messangers;
-using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -26,33 +25,49 @@ namespace Asd2Edittor.Views.Behaviors
         {
             base.OnAttached();
             AssociatedObject.PreviewTextInput += OnPreviewTextInput;
+            AssociatedObject.KeyDown += KeyDown;
         }
         protected override void OnDetaching()
         {
             base.OnDetaching();
             AssociatedObject.PreviewTextInput -= OnPreviewTextInput;
+            AssociatedObject.KeyDown -= KeyDown;
         }
         private void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             currentEntered = e.Text;
             switch (currentEntered)
             {
-                case "<": InsertText(">"); break;
-                case "\"": InsertText("\""); break;
+                case "<":
+                case "/":
+                    AssociatedObject.InsertText(">"); break;
+                case "\"": AssociatedObject.InsertText("\""); break;
             }
         }
-        private void InsertText(string inserted)
+        private void KeyDown(object sender, KeyEventArgs e)
         {
-            var position = AssociatedObject.SelectionStart;
-            var length = AssociatedObject.SelectionLength;
-            var text = AssociatedObject.Text;
+            switch (e.KeyboardDevice.Modifiers)
+            {
+                case ModifierKeys.Control:
+                    switch (e.Key)
+                    {
+                        case Key.D:
+                            CopyLine();
+                            break;
+                    }
+                    break;
+            }
+        }
+        private void CopyLine()
+        {
+            var (x, y) = AssociatedObject.GetCaretPosition();
+            var line = AssociatedObject.GetLineText(y);
+            var endPos = AssociatedObject.CaretIndex + line.Length;
             AssociatedObject.BeginChange();
-            AssociatedObject.Clear();
-            AssociatedObject.AppendText(text[0..position]);
-            AssociatedObject.AppendText(inserted);
-            AssociatedObject.AppendText(text[position..]);
+            AssociatedObject.CaretIndex += line.Length - x;
+            AssociatedObject.InsertText(line);
+            AssociatedObject.CaretIndex = endPos;
             AssociatedObject.EndChange();
-            AssociatedObject.SelectionStart = position;
         }
     }
 }
