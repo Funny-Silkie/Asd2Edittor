@@ -23,5 +23,14 @@ namespace Asd2Edittor.Views
         {
 
         }
+        private void TreeViewItem_KeyDown(object sender, KeyEventArgs e)
+        {
+            var treeViewItem = (TreeViewItem)sender;
+            var dataContext = (FilePathViewModel)treeViewItem.DataContext;
+            if (e.Key == Key.Delete)
+            {
+                dataContext.DeleteFile.Execute();
+            }
+        }
     }
 }
