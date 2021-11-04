@@ -13,12 +13,12 @@
         x:Name="window"
         Background="{DynamicResource ResourceKey=BGColor}" DataContext="{x:Static vm:MainWindowViewModel.Current}" Title="Altseed2 UIエディタ" Height="450" Width="800">
     <Window.Resources>
-        <!--<Brush x:Key="BGColor">#202020</Brush>
+        <Brush x:Key="BGColor">#202020</Brush>
         <Brush x:Key="BGColor2">#151515</Brush>
-        <Brush x:Key="TextColor">White</Brush>-->
-        <Brush x:Key="BGColor">#F0F0F0</Brush>
+        <Brush x:Key="TextColor">White</Brush>
+        <!--<Brush x:Key="BGColor">#F0F0F0</Brush>
         <Brush x:Key="BGColor2">White</Brush>
-        <Brush x:Key="TextColor">Black</Brush>
+        <Brush x:Key="TextColor">Black</Brush>-->
     </Window.Resources>
     <bh:Interaction.Behaviors>
         <beh:MainWindowBehavior/>
