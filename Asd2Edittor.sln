@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Asd2Edittor", "Asd2Edittor\Asd2Edittor.csproj", "{D9FDEC07-B8B2-B03C-6BD0-050246163E60}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsdEdittor.Core", "AsdEdittor.Core\AsdEdittor.Core.csproj", "{34607D1D-DB11-4791-8441-54BEB79417FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Asd2UI", "AsdEdittor.Core\Asd2UI.csproj", "{34607D1D-DB11-4791-8441-54BEB79417FB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35360934-6E9C-4066-A0A4-4CF132385ED0}"
 	ProjectSection(SolutionItems) = preProject
