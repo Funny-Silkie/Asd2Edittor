@@ -42,27 +42,20 @@ namespace Asd2Edittor.Views.Behaviors
                         case Key.D:
                             CtrlD();
                             break;
+                        case Key.Enter:
+                            CtrlEnter();
+                            break;
                     }
                     break;
                 case ModifierKeys.None:
                     switch (e.Key)
                     {
                         case Key.Enter:
-                            var (x, y) = AssociatedObject.GetCaretPosition();
-                            var line = AssociatedObject.GetLineText(y);
-                            var c = 0;
-                            for (int i = 0; i < line.Length; i++)
-                            {
-                                if (line[i] != ' ') break;
-                                c++;
-                            }
-                            AssociatedObject.InsertText($"\r\n{new string(' ', c)}");
-                            AssociatedObject.CaretIndex += 2 + c;
+                            Enter();
                             e.Handled = true;
                             break;
                         case Key.Tab:
-                            AssociatedObject.InsertText("    ");
-                            AssociatedObject.CaretIndex += 4;
+                            Tab();
                             e.Handled = true;
                             break;
                     }
@@ -121,6 +114,43 @@ namespace Asd2Edittor.Views.Behaviors
             AssociatedObject.InsertText(line);
             AssociatedObject.CaretIndex = endPos;
             AssociatedObject.EndChange();
+        }
+        private void CtrlEnter()
+        {
+            var (x, _) = AssociatedObject.GetCaretPosition();
+            AssociatedObject.CaretIndex -= x;
+            if (AssociatedObject.CaretIndex == 0) AssociatedObject.InsertText("\r\n");
+            else
+            {
+                AssociatedObject.CaretIndex -= 2;
+                Enter();
+            }
+        }
+        private int Enter(bool tab = true)
+        {
+            var (x, y) = AssociatedObject.GetCaretPosition();
+            var line = AssociatedObject.GetLineText(y);
+            var tabbed = x > 0 && line[x - 1] == '>' && (x <= 1 || line[x - 2] != '/');
+            var c = 0;
+            for (int i = 0; i < line.Length; i++)
+            {
+                if (line[i] != ' ') break;
+                c++;
+            }
+            AssociatedObject.InsertText($"\r\n{new string(' ', c)}");
+            AssociatedObject.CaretIndex += 2 + c;
+            if (tab && tabbed)
+            {
+                Enter(false);
+                AssociatedObject.CaretIndex -= c + 2;
+                Tab();
+            }
+            return c;
+        }
+        private void Tab()
+        {
+            AssociatedObject.InsertText("    ");
+            AssociatedObject.CaretIndex += 4;
         }
     }
 }
