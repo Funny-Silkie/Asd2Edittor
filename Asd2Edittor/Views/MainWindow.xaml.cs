@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -52,6 +53,7 @@ namespace Asd2Edittor.Views
                     WindowStyle = ProcessWindowStyle.Minimized,
                 });
                 p.WaitForInputIdle();
+                Thread.Sleep(100);
 
                 var style = GetWindowLong(p.MainWindowHandle, GWL_STYLE);
                 style = style & ~WS_CAPTION & ~WS_THICKFRAME;
@@ -59,12 +61,6 @@ namespace Asd2Edittor.Views
                 SetWindowLong(p.MainWindowHandle, GWL_STYLE, style);
 
                 SetParent(p.MainWindowHandle, asdViewer.Handle);
-
-                var errCode = Marshal.GetLastWin32Error();
-                var message = new StringBuilder(255);
-
-                FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, IntPtr.Zero, (uint)errCode, 0, message, message.Capacity, IntPtr.Zero);
-                MessageBox.Show(message.ToString());
 
                 asdViewer.SizeChanged += (s, e) => MoveWindow(p.MainWindowHandle, 0, 0, asdViewer.Width, asdViewer.Height, 1);
             }
