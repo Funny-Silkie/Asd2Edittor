@@ -29,4 +29,9 @@
   <ItemGroup>
     <ProjectReference Include="..\AsdEdittor.Core\Asd2UI.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="XmlTemplete\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
