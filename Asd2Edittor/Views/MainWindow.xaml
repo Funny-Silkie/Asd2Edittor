@@ -9,9 +9,10 @@
         xmlns:beh="clr-namespace:Asd2Edittor.Views.Behaviors"
         xmlns:fsctrl="clr-namespace:fslib3.WPF.Controls;assembly=fslib3.WPF"
         xmlns:fsbeh="clr-namespace:fslib3.WPF.Behaviors;assembly=fslib3.WPF"
+        xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         mc:Ignorable="d"
         x:Name="window"
-        Background="{DynamicResource ResourceKey=BGColor}" DataContext="{x:Static vm:MainWindowViewModel.Current}" Title="Altseed2 UIエディタ" Height="450" Width="800">
+        Background="{DynamicResource ResourceKey=BGColor}" DataContext="{x:Static vm:MainWindowViewModel.Current}" Title="Altseed2 UIエディタ" Height="600" Width="800">
     <Window.Resources>
         <Brush x:Key="BGColor">#202020</Brush>
         <Brush x:Key="BGColor2">#151515</Brush>
@@ -19,6 +20,17 @@
         <!--<Brush x:Key="BGColor">#F0F0F0</Brush>
         <Brush x:Key="BGColor2">White</Brush>
         <Brush x:Key="TextColor">Black</Brush>-->
+        <!--  GridSplitter  -->
+        <Style x:Key="HorizontalGridSplitter" TargetType="{x:Type GridSplitter}">
+            <Setter Property="Height" Value="5" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <Style x:Key="VerticalGridSplitter" TargetType="{x:Type GridSplitter}">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Width" Value="5" />
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
     </Window.Resources>
     <bh:Interaction.Behaviors>
         <beh:MainWindowBehavior/>
@@ -29,6 +41,8 @@
             <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
@@ -49,12 +63,16 @@
 
             </MenuItem>
         </Menu>
-        <TextBox Grid.Column="0" Grid.Row="1" AcceptsReturn="True" AcceptsTab="True" Background="{DynamicResource ResourceKey=BGColor2}" Foreground="{DynamicResource ResourceKey=TextColor}" FontFamily="ＭＳ ゴシック" Text="{Binding Path=Text.Value, UpdateSourceTrigger=Explicit}">
+        <WindowsFormsHost Grid.Column="0" Grid.Row="1">
+            <forms:Control x:Name="asdViewer"/>
+        </WindowsFormsHost>
+        <GridSplitter Grid.Row="2" Style="{StaticResource HorizontalGridSplitter}" />
+        <TextBox Grid.Column="0" Grid.Row="3" AcceptsReturn="True" AcceptsTab="True" Background="{DynamicResource ResourceKey=BGColor2}" Foreground="{DynamicResource ResourceKey=TextColor}" FontFamily="ＭＳ ゴシック" Text="{Binding Path=Text.Value, UpdateSourceTrigger=Explicit}">
             <bh:Interaction.Behaviors>
                 <beh:MainTextBoxBehavior/>
             </bh:Interaction.Behaviors>
         </TextBox>
-        <TreeView Grid.Column="1" Background="Transparent" Grid.Row="1" ItemsSource="{Binding Path=Files}">
+        <TreeView Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Background="Transparent" ItemsSource="{Binding Path=Files}">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="vm:FilePathViewModel" ItemsSource="{Binding Path=Children}">
                     <TextBlock Foreground="{DynamicResource ResourceKey=TextColor}" Text="{Binding Path=Name.Value}"/>

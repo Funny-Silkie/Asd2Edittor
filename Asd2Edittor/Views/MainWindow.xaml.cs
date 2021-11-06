@@ -1,6 +1,8 @@
 ﻿using Asd2Edittor.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,9 +17,42 @@ namespace Asd2Edittor.Views
 {
     public partial class MainWindow : Window
     {
+        [DllImport("user32")]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        [DllImport("user32")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+        [DllImport("user32")]
+        private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+        [DllImport("user32")]
+        private static extern int MoveWindow(IntPtr hwnd, int x, int y, int nWidth, int nHeight, int bRepaint);
+        private const int GWL_STYLE = -16;
+        private const int WS_THICKFRAME = 0x00040000;
+        private const int WS_CAPTION = 0x00C00000;
+        private const int WS_CHILD = 0x40000000;
         public MainWindow()
         {
             InitializeComponent();
+            {
+                var p = Process.Start(new ProcessStartInfo
+                {
+                    FileName = "AsdViewer.exe",
+
+                    // HiddenとしたいがMainWindowHandleが0になる
+                    // FindWindowで探す必要あり 面倒なのでMinimized
+                    //WindowStyle = ProcessWindowStyle.Hidden,
+                    WindowStyle = ProcessWindowStyle.Minimized,
+                });
+                p.WaitForInputIdle();
+
+                var style = GetWindowLong(p.MainWindowHandle, GWL_STYLE);
+                style = style & ~WS_CAPTION & ~WS_THICKFRAME;
+                //style |= WS_CHILD; // メニュー有無
+                SetWindowLong(p.MainWindowHandle, GWL_STYLE, style);
+
+                SetParent(p.MainWindowHandle, asdViewer.Handle);
+
+                asdViewer.SizeChanged += (s, e) => MoveWindow(p.MainWindowHandle, 0, 0, asdViewer.Width, asdViewer.Height, 1);
+            }
         }
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
