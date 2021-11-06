@@ -25,6 +25,15 @@ namespace Asd2Edittor.Views
         private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
         [DllImport("user32")]
         private static extern int MoveWindow(IntPtr hwnd, int x, int y, int nWidth, int nHeight, int bRepaint);
+
+        [DllImport("kernel32.dll")]
+        static extern uint FormatMessage(
+          uint dwFlags, IntPtr lpSource,
+          uint dwMessageId, uint dwLanguageId,
+          StringBuilder lpBuffer, int nSize,
+          IntPtr Arguments);
+        private const uint FORMAT_MESSAGE_FROM_SYSTEM = 0x00001000;
+
         private const int GWL_STYLE = -16;
         private const int WS_THICKFRAME = 0x00040000;
         private const int WS_CAPTION = 0x00C00000;
@@ -50,6 +59,12 @@ namespace Asd2Edittor.Views
                 SetWindowLong(p.MainWindowHandle, GWL_STYLE, style);
 
                 SetParent(p.MainWindowHandle, asdViewer.Handle);
+
+                var errCode = Marshal.GetLastWin32Error();
+                var message = new StringBuilder(255);
+
+                FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, IntPtr.Zero, (uint)errCode, 0, message, message.Capacity, IntPtr.Zero);
+                MessageBox.Show(message.ToString());
 
                 asdViewer.SizeChanged += (s, e) => MoveWindow(p.MainWindowHandle, 0, 0, asdViewer.Width, asdViewer.Height, 1);
             }
