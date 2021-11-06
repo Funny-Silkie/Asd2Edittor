@@ -17,6 +17,7 @@ namespace Asd2Edittor.Views.Behaviors
             {
                 case MessageType.UpdateText:
                     AssociatedObject.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                    RxMessanger.Default.Send(MessageType.OnFinishUpdateText);
                     break;
             }
         }
