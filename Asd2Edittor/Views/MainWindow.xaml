@@ -22,13 +22,13 @@
         <Brush x:Key="TextColor">Black</Brush>-->
         <!--  GridSplitter  -->
         <Style x:Key="HorizontalGridSplitter" TargetType="{x:Type GridSplitter}">
-            <Setter Property="Height" Value="5" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Height" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Background" Value="Transparent"/>
         </Style>
         <Style x:Key="VerticalGridSplitter" TargetType="{x:Type GridSplitter}">
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="Width" Value="5" />
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Width" Value="5"/>
             <Setter Property="Background" Value="Transparent"/>
         </Style>
     </Window.Resources>
@@ -99,6 +99,6 @@
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+O" Command="{Binding Path=MenuFileOpen}"/>
         <KeyBinding Gesture="Ctrl+W" Command="{Binding Path=CloseWindow}"/>
-        <KeyBinding Gesture="F5" Command="{Binding Path=UpdateText}"/>
+        <KeyBinding Gesture="Ctrl+B" Command="{Binding Path=UpdateText}"/>
     </Window.InputBindings>
 </Window>

@@ -1,9 +1,7 @@
-﻿using Altseed2;
-using Asd2UI.Altseed2;
+﻿using Asd2UI.Altseed2;
 using Asd2UI.Xml.Converters;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Asd2UI.Xml
 {
@@ -36,7 +34,6 @@ namespace Asd2UI.Xml
             if (xml.Length == 0) throw new ArgumentException("空文字です", nameof(xml));
             errors.Clear();
             var content = false;
-            var name = string.Empty;
             var lines = xml.Split("\r\n");
             for (var i = 0; i < lines.Length; i++)
             {
@@ -59,44 +56,14 @@ namespace Asd2UI.Xml
                     }
                     var start = 0;
                     for (int j = 0; j < i; j++) start += 2 + lines[j].Length;
-                    var units = GetXmlUnits(xml, start);
+                    var units = StringHandler.GetXmlUnits(xml, start);
+                    if (units.Length == 0) errors.Add(new XmlParseException("宣言がありません"));
+                    if (units.Length > 1) errors.Add(new XmlParseException("宣言が多重にあります"));
+                    return XmlEntry.Create(units[0]);
                 }
             }
-            return default;
-        }
-        private static string[] GetXmlUnits(string xml, int start)
-        {
-            var list = new List<string>();
-            var nestLevel = 0;
-            var lv0Start = 0;
-            for (int i = start; i < xml.Length; i++)
-            {
-                var c = xml[i];
-                if (c == '<')
-                {
-                    var firstEnd = xml.IndexOf('>', i);
-                    if ((firstEnd > 0 && xml[firstEnd - 1] == '/') || (i + 1 < xml.Length && xml[i + 1] == '/'))
-                    {
-                        if (nestLevel == 0) lv0Start = i;
-                        nestLevel++;
-                        continue;
-                    }
-                }
-                if (c == '>')
-                {
-                    var lastStart = xml.LastIndexOf('<', i);
-                    if ((lastStart >= 0 && xml[lastStart + 1] == '/') || (i > 0 && xml[i - 1] == '/'))
-                    {
-                        if (nestLevel == 0)
-                        {
-                            list.Add(xml[lv0Start..(i + 1)]);
-                            continue;
-                        }
-                        else nestLevel--;
-                    }
-                }
-            }
-            return list.ToArray();
+            errors.Add(new XmlParseException("宣言がありません"));
+            return null;
         }
         private UINode ToNode(XmlEntry entry)
         {

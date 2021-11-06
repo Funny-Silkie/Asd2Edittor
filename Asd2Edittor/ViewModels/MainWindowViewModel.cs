@@ -1,5 +1,6 @@
 using Asd2Edittor.Messangers;
 using Asd2Edittor.Models;
+using Asd2UI.Xml;
 using fslib3.WPF;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Reactive.Bindings;
@@ -20,7 +21,7 @@ namespace Asd2Edittor.ViewModels
         public static MainWindowViewModel Current { get; } = new MainWindowViewModel();
         public FilePathViewModel Root => Files.FirstOrDefault();
         public ReactiveCollection<FilePathViewModel> Files { get; } = new ReactiveCollection<FilePathViewModel>();
-        public ReactiveProperty<string> Text { get; } = new ReactiveProperty<string>();
+        public ReactiveProperty<string> Text { get; } = new ReactiveProperty<string>(default, ReactivePropertyMode.None);
         public ReactiveProperty<string> WatchPath { get; } = new ReactiveProperty<string>();
         public MainWindowViewModel()
         {
@@ -115,7 +116,16 @@ namespace Asd2Edittor.ViewModels
         }
         private void OnGetMessage(MessageInfo info)
         {
-
+            if (info is TypedMessage t)
+            {
+                switch (t.MessageType)
+                {
+                    case MessageType.OnFinishUpdateText:
+                        var reader = new AsdXmlReader();
+                        var entry = reader.Read(Text.Value);
+                        break;
+                }
+            }
         }
         #region Commands
         protected override void InitializeCommands()

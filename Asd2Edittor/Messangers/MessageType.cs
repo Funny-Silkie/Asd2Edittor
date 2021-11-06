@@ -4,5 +4,6 @@
     {
         CloseWindow,
         UpdateText,
+        OnFinishUpdateText,
     }
 }

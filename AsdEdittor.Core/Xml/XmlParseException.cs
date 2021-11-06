@@ -24,7 +24,7 @@ namespace Asd2UI.Xml
         /// </summary>
         /// <param name="message">使用するメッセージ</param>
         /// <param name="line">行番号</param>
-        public XmlParseException(string message, int line) : base(message)
+        public XmlParseException(string message, int line = -1) : base(message)
         {
             Line = line;
         }

@@ -50,5 +50,34 @@ namespace Asd2UI.Xml
             Children = children ?? new List<XmlEntry>();
             Fields = fields ?? new Dictionary<string, string>();
         }
+        /// <summary>
+        /// xmlのテキストから<see cref="XmlEntry"/>の新しいインスタンスを生成する
+        /// </summary>
+        /// <param name="xml">読み込むxml</param>
+        /// <returns><paramref name="xml"/>をもとに生成された<see cref="XmlEntry"/>の新しいインスタンス<</returns>
+        internal static XmlEntry Create(string xml)
+        {
+            var headEnd = xml.IndexOf('>');
+            var single = headEnd - 1 >= 0 && xml[headEnd - 1] == '/';
+            var tailStart = xml.LastIndexOf('<');
+            var head = single ? xml[1..(headEnd - 1)] : xml[1..headEnd];
+            var tail = single ? xml[(tailStart + 1)..^2].TrimStart('/') : xml[(tailStart + 1)..^1].TrimStart('/');
+            var values = head.SplitWithoutDoubleQuotation(' ');
+            var name = values[0];
+            if (head != tail && name != tail) throw new XmlParseException("示しているアイテムが異なります");
+            var result = new XmlEntry(name);
+            for (int i = 1; i < values.Count; i++)
+            {
+                var attribute = values[i].SplitWithoutDoubleQuotation('=');
+                if (attribute.Count != 2) throw new XmlParseException("フィールドの記法が無効です");
+                result.Fields.Add(attribute[0], attribute[1].Trim('"'));
+            }
+            if (name == tail)
+            {
+                var children = StringHandler.GetXmlUnits(xml[(headEnd + 1)..tailStart].Trim(), 0);
+                foreach (var child in children) result.Children.Add(Create(child));
+            }
+            return result;
+        }
     }
 }
