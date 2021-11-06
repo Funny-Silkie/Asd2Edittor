@@ -14,12 +14,12 @@
         x:Name="window"
         Background="{DynamicResource ResourceKey=BGColor}" DataContext="{x:Static vm:MainWindowViewModel.Current}" Title="Altseed2 UIエディタ" Height="600" Width="750">
     <Window.Resources>
-        <Brush x:Key="BGColor">#202020</Brush>
+        <!--<Brush x:Key="BGColor">#202020</Brush>
         <Brush x:Key="BGColor2">#151515</Brush>
-        <Brush x:Key="TextColor">White</Brush>
-        <!--<Brush x:Key="BGColor">#F0F0F0</Brush>
+        <Brush x:Key="TextColor">White</Brush>-->
+        <Brush x:Key="BGColor">#F0F0F0</Brush>
         <Brush x:Key="BGColor2">White</Brush>
-        <Brush x:Key="TextColor">Black</Brush>-->
+        <Brush x:Key="TextColor">Black</Brush>
         <!--  GridSplitter  -->
         <Style x:Key="HorizontalGridSplitter" TargetType="{x:Type GridSplitter}">
             <Setter Property="Height" Value="5"/>
