@@ -12,7 +12,7 @@ namespace Asd2UI.Xml
         /// <summary>
         /// <see cref="AsdXmlConverter"/>のプロバイダを取得または設定する
         /// </summary>
-        public IAsdXmlConverterProvider Provider { get; set; }
+        public AsdXmlConverterProvider Provider { get; set; }
         /// <summary>
         /// <see cref="AsdXmlReader"/>の新しいインスタンスを初期化する
         /// </summary>

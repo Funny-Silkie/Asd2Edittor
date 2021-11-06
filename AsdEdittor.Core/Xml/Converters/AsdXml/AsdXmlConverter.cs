@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace Asd2UI.Xml.Converters
 {
     /// <summary>
-    /// 文字列を特定の型に変換するパーザのクラス
+    /// xmlを特定の型に変換するパーザのクラス
     /// </summary>
     public abstract class AsdXmlConverter
     {
@@ -30,7 +30,7 @@ namespace Asd2UI.Xml.Converters
         public abstract bool Convert(XmlEntry xml, Type resultType, out object result);
     }
     /// <summary>
-    /// 文字列を特定の型に変換するパーザのクラス
+    /// xmlを特定の型に変換するパーザのクラス
     /// </summary>
     /// <typeparam name="T">変換先の型</typeparam>
     public abstract class AsdXmlConverter<T> : AsdXmlConverter

@@ -3,10 +3,14 @@
 namespace Asd2UI.Xml.Converters
 {
     /// <summary>
-    /// <see cref="AsdXmlConverter"/>を提供するインターフェイス
+    /// <see cref="AsdXmlConverter"/>を提供する基底クラス
     /// </summary>
-    public interface IAsdXmlConverterProvider
+    public abstract class AsdXmlConverterProvider
     {
+        /// <summary>
+        /// <see cref="AsdXmlConverterProvider"/>の新しいインスタンスを初期化する
+        /// </summary>
+        protected AsdXmlConverterProvider() { }
         /// <summary>
         /// 型に応じた<see cref="AsdXmlConverter"/>を取得する
         /// </summary>
