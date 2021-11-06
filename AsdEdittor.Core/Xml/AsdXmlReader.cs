@@ -26,9 +26,8 @@ namespace Asd2UI.Xml
         /// <param name="xml">読み取るxmlの文字列</param>
         /// <exception cref="ArgumentException"><paramref name="xml"/>が空文字</exception>
         /// <exception cref="ArgumentNullException"><paramref name="xml"/>がnull</exception>
-        /// <returns>読み込まれたxmlをもとにした<see cref="UINode"/>のインスタンス</returns>
-        public UINode Read(string xml) => ToNode(ReadPrivate(xml));
-        private XmlEntry ReadPrivate(string xml)
+        /// <returns>読み込まれたxmlをもとにした<see cref="XmlEntry"/>のインスタンス</returns>
+        public XmlEntry ToXmlEntry(string xml)
         {
             if (xml == null) throw new ArgumentNullException(nameof(xml), "引数がnullです");
             if (xml.Length == 0) throw new ArgumentException("空文字です", nameof(xml));
@@ -64,10 +63,6 @@ namespace Asd2UI.Xml
             }
             errors.Add(new XmlParseException("宣言がありません"));
             return null;
-        }
-        private UINode ToNode(XmlEntry entry)
-        {
-            return default;
         }
     }
 }

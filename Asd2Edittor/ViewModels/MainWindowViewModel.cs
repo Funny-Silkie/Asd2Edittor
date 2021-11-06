@@ -122,7 +122,7 @@ namespace Asd2Edittor.ViewModels
                 {
                     case MessageType.OnFinishUpdateText:
                         var reader = new AsdXmlReader();
-                        var entry = reader.Read(Text.Value);
+                        var entry = reader.ToXmlEntry(Text.Value);
                         break;
                 }
             }

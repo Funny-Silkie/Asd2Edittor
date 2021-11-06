@@ -38,6 +38,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -47,7 +48,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Menu Background="Transparent" Foreground="{DynamicResource ResourceKey=TextColor}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
+        <Menu Background="Transparent" Foreground="{DynamicResource ResourceKey=TextColor}" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
             <MenuItem Header="ファイル(_F)">
                 <MenuItem Header="新規(_N)" InputGestureText="Ctrl+N"/>
                 <MenuItem Header="開く(_O)" InputGestureText="Ctrl+O" Command="{Binding Path=MenuFileOpen}"/>
@@ -72,7 +73,8 @@
                 <beh:MainTextBoxBehavior/>
             </bh:Interaction.Behaviors>
         </TextBox>
-        <TreeView Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Background="Transparent" ItemsSource="{Binding Path=Files}">
+        <GridSplitter Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Style="{StaticResource ResourceKey=VerticalGridSplitter}"/>
+        <TreeView Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" Background="Transparent" ItemsSource="{Binding Path=Files}">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="vm:FilePathViewModel" ItemsSource="{Binding Path=Children}">
                     <TextBlock Foreground="{DynamicResource ResourceKey=TextColor}" Text="{Binding Path=Name.Value}"/>
