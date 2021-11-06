@@ -13,6 +13,8 @@ namespace Asd2UI.Xml
         /// 行番号
         /// </summary>
         public int Line { get; set; }
+        /// <inheritdoc/>
+        public override string Message => Line < 0 ? base.Message : $"{Line}：{base.Message}";
         /// <summary>
         /// <see cref="XmlParseException"/>の新しいインスタンスを初期化する
         /// </summary>
