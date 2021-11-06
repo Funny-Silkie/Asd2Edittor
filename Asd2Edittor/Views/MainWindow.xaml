@@ -12,7 +12,7 @@
         xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         mc:Ignorable="d"
         x:Name="window"
-        Background="{DynamicResource ResourceKey=BGColor}" DataContext="{x:Static vm:MainWindowViewModel.Current}" Title="Altseed2 UIエディタ" Height="600" Width="800">
+        Background="{DynamicResource ResourceKey=BGColor}" DataContext="{x:Static vm:MainWindowViewModel.Current}" Title="Altseed2 UIエディタ" Height="600" Width="750">
     <Window.Resources>
         <Brush x:Key="BGColor">#202020</Brush>
         <Brush x:Key="BGColor2">#151515</Brush>
@@ -43,7 +43,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="400"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
@@ -63,8 +63,10 @@
             <MenuItem Header="表示(_V)">
 
             </MenuItem>
+            <MenuItem Header="{Binding ElementName=asdViewer, Path=Width}"/>
+            <MenuItem Header="{Binding ElementName=asdViewer, Path=Height}"/>
         </Menu>
-        <WindowsFormsHost Grid.Column="0" Grid.Row="1">
+        <WindowsFormsHost x:Name="host" Grid.Column="0" Grid.Row="1">
             <forms:Control x:Name="asdViewer"/>
         </WindowsFormsHost>
         <GridSplitter Grid.Row="2" Style="{StaticResource HorizontalGridSplitter}" />
