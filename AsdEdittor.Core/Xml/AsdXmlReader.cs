@@ -1,4 +1,4 @@
-﻿using Asd2UI.Altseed2;
+using Asd2UI.Altseed2;
 using Asd2UI.Xml.Converters;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,11 @@ namespace Asd2UI.Xml
         /// <summary>
         /// <see cref="AsdXmlConverter"/>のプロバイダを取得または設定する
         /// </summary>
-        public AsdXmlConverterProvider Provider { get; set; }
+        public AsdXmlConverterProvider AsdXmlConverterProvider { get; set; } = new DefaultAsdXmlConverterProvider();
+        /// <summary>
+        /// <see cref="TextValueConverter"/>のプロバイダを取得または設定する
+        /// </summary>
+        public TextValueConverterProvider TextValueConverterProvider { get; set; } = new DefaultTextValueConverterProvider();
         /// <summary>
         /// <see cref="AsdXmlReader"/>の新しいインスタンスを初期化する
         /// </summary>
