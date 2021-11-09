@@ -24,10 +24,11 @@ namespace Asd2UI.Xml.Converters
         /// </summary>
         /// <param name="xml">変換するxmlのエントリー</param>
         /// <param name="resultType">変換先の型</param>
+        /// <param name="reader">読み取り中の<see cref="AsdXmlReader"/>のインスタンス</param>
         /// <param name="result">変換された値</param>
         /// <exception cref="ArgumentNullException"><paramref name="xml"/>または<paramref name="resultType"/>がnull</exception>
         /// <returns><paramref name="xml"/>を変換出来たらtrue，それ以外でfalse</returns>
-        public abstract bool Convert(XmlEntry xml, Type resultType, out object result);
+        public abstract bool Convert(XmlEntry xml, Type resultType, AsdXmlReader reader, out object result);
     }
     /// <summary>
     /// xmlを特定の型に変換するパーザのクラス
@@ -49,13 +50,14 @@ namespace Asd2UI.Xml.Converters
         /// 変換を行う
         /// </summary>
         /// <param name="xml">変換するxmlのエントリー</param>
+        /// <param name="reader">読み取り中の<see cref="AsdXmlReader"/>のインスタンス</param>
         /// <param name="result">変換された値</param>
         /// <exception cref="ArgumentNullException"><paramref name="xml"/>がnull</exception>
         /// <returns><paramref name="xml"/>を変換出来たらtrue，それ以外でfalse</returns>
-        public abstract bool Convert(XmlEntry xml, out T result);
+        public abstract bool Convert(XmlEntry xml, AsdXmlReader reader, out T result);
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Convert(XmlEntry xml, Type resultType, out object result)
+        public override bool Convert(XmlEntry xml, Type resultType, AsdXmlReader reader, out object result)
         {
             if (xml == null) throw new ArgumentNullException(nameof(xml), "引数がnullです");
             if (resultType == null) throw new ArgumentNullException(nameof(resultType), "引数がnullです");
@@ -64,7 +66,7 @@ namespace Asd2UI.Xml.Converters
                 result = null;
                 return false;
             }
-            var ret = Convert(xml, out var t);
+            var ret = Convert(xml, reader, out var t);
             result = t;
             return ret;
         }

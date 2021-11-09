@@ -1,4 +1,4 @@
-using Asd2UI.Altseed2;
+﻿using Asd2UI.Altseed2;
 using Asd2UI.Xml.Converters;
 using System;
 using System.Collections.Generic;
@@ -67,6 +67,32 @@ namespace Asd2UI.Xml
             }
             errors.Add(new XmlParseException("宣言がありません"));
             return null;
+        }
+        /// <summary>
+        /// <see cref="UINode"/>に変換する
+        /// </summary>
+        /// <param name="entry">読み込む<see cref="XmlEntry"/>のインスタンス</param>
+        /// <exception cref="ArgumentNullException"><paramref name="entry"/>がnull</exception>
+        /// <returns><paramref name="entry"/>をもとに生成された</returns>
+        public UINode ToNode(XmlEntry entry)
+        {
+            if (entry == null) throw new ArgumentNullException(nameof(entry), "引数がnullです");
+            var type = NameToType(entry.Name) ?? throw new ArgumentException("認識されていない型です", nameof(entry));
+            var converter = AsdXmlConverterProvider.GetConverter(type) ?? throw new ArgumentException("コンバータを取得出来ませんでした", nameof(entry));
+            converter.Convert(entry, type, this, out var result);
+            return result as UINode;
+        }
+        /// <summary>
+        /// 型名から実際の型を取得する
+        /// </summary>
+        /// <param name="name">型名</param>
+        /// <returns><paramref name="name"/>に応じた型 見つからなかったら<see langword="null"/></returns>
+        internal Type NameToType(string name)
+        {
+            switch (name)
+            {
+                default: return null;
+            }
         }
     }
 }
