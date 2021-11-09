@@ -61,9 +61,10 @@ namespace Asd2UI.Xml
                             nestLevel++;
                             continue;
                         }
+                        else if (nestLevel == 0 && firstEnd > 0 && xml[firstEnd - 1] == '/') lv0Start = i;
                         break;
                     case '>':
-                        var lastStart = xml.LastIndexOf('<', i);
+                        var lastStart = LastIndexOf(xml, '<', i);
                         if ((lastStart >= 0 && xml[lastStart + 1] == '/')) nestLevel--;
                         if (nestLevel == 0)
                         {
@@ -74,6 +75,13 @@ namespace Asd2UI.Xml
                 }
             }
             return list.ToArray();
+        }
+        private static int LastIndexOf(string value, char searchFor, int start)
+        {
+            for (int i = start; i >= 0; i--)
+                if (value[i] == searchFor)
+                    return i;
+            return -1;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Altseed2;
+using System;
 
 namespace Asd2UI.Xml.Converters
 {
@@ -13,8 +14,16 @@ namespace Asd2UI.Xml.Converters
             switch (type)
             {
                 case null: throw new ArgumentNullException(nameof(type), "引数がnullです");
-                default: return null;
+                case Type t when IsNodeType(t): return (AsdXmlConverter)Activator.CreateInstance(typeof(NodeAsdXmlConverter<>).MakeGenericType(type));
+                default: return (AsdXmlConverter)Activator.CreateInstance(typeof(DefaultAsdXmlConverter<>).MakeGenericType(type));
             }
+        }
+        private bool IsNodeType(Type type)
+        {
+            for (; type != null; type = type.BaseType)
+                if (type == typeof(Node))
+                    return true;
+            return false;
         }
     }
 }

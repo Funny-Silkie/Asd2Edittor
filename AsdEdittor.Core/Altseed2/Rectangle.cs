@@ -69,8 +69,21 @@ namespace Asd2UI.Altseed2
             {
                 if (RectangleSize == value) return;
                 rectangleNode.RectangleSize = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ContentSize)));
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(RectangleSize)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ContentSize)));
+            }
+        }
+        /// <summary>
+        /// 重ね順を取得または設定する
+        /// </summary>
+        public int ZOrder
+        {
+            get => rectangleNode.ZOrder;
+            set
+            {
+                if (ZOrder == value) return;
+                rectangleNode.ZOrder = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ZOrder)));
             }
         }
         /// <summary>
@@ -81,7 +94,5 @@ namespace Asd2UI.Altseed2
             rectangleNode = new RectangleNode();
             InnerTransformNode.AddChildNode(rectangleNode);
         }
-        /// <inheritdoc/>
-        protected override TransformNode CreateInnerNode() => new RectangleNode();
     }
 }

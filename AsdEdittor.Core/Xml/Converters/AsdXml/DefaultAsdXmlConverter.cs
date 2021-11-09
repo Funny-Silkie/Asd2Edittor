@@ -73,7 +73,7 @@ namespace Asd2UI.Xml.Converters
                     var propertyInfo = typeof(T).GetProperty(fieldName, reflectionFlags);
                     var propertyConverter = reader.TextValueConverterProvider.GetConverter(propertyInfo.PropertyType);
                     if (!propertyConverter.Convert(fieldString, propertyInfo.PropertyType, out var propertyValue)) throw new XmlParseException("プロパティの復元に失敗しました");
-                    fieldInfo.SetValue(value, propertyValue);
+                    propertyInfo.SetValue(value, propertyValue);
                 }
                 else
                 {

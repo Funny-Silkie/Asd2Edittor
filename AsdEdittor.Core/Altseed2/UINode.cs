@@ -50,7 +50,7 @@ namespace Asd2UI.Altseed2
         /// </summary>
         public bool HorizontalFlip
         {
-            get => HorizontalFlip;
+            get => InnerTransformNode.HorizontalFlip;
             set
             {
                 if (InnerTransformNode.HorizontalFlip == value) return;
@@ -122,6 +122,6 @@ namespace Asd2UI.Altseed2
         /// <see cref="InnerTransformNode"/>を生成する
         /// </summary>
         /// <returns><see cref="InnerTransformNode"/>用のインスタンス</returns>
-        protected abstract TransformNode CreateInnerNode();
+        protected virtual TransformNode CreateInnerNode() => new TransformNode();
     }
 }

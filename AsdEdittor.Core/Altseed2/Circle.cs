@@ -70,6 +70,7 @@ namespace Asd2UI.Altseed2
                 if (Radius == value) return;
                 circleNode.Radius = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(Radius)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ContentSize)));
             }
         }
         /// <summary>
@@ -83,6 +84,20 @@ namespace Asd2UI.Altseed2
                 if (VertNum == value) return;
                 circleNode.VertNum = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(VertNum)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ContentSize)));
+            }
+        }
+        /// <summary>
+        /// 重ね順を取得または設定する
+        /// </summary>
+        public int ZOrder
+        {
+            get => circleNode.ZOrder;
+            set
+            {
+                if (ZOrder == value) return;
+                circleNode.ZOrder = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ZOrder)));
             }
         }
         /// <summary>
@@ -93,7 +108,5 @@ namespace Asd2UI.Altseed2
             circleNode = new CircleNode();
             InnerTransformNode.AddChildNode(circleNode);
         }
-        /// <inheritdoc/>
-        protected override TransformNode CreateInnerNode() => new CircleNode();
     }
 }

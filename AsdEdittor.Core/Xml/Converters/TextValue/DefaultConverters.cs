@@ -89,7 +89,7 @@ namespace Asd2UI.Xml.Converters
                 result = default;
                 return false;
             }
-            if (float.TryParse(value, out var single))
+            if (!value.Contains(',') && float.TryParse(value, out var single))
             {
                 result = new Vector2F(single, single);
                 return true;
@@ -113,7 +113,7 @@ namespace Asd2UI.Xml.Converters
                 result = default;
                 return false;
             }
-            if (int.TryParse(value, out var single))
+            if (!value.Contains(',') && int.TryParse(value, out var single))
             {
                 result = new Vector2I(single, single);
                 return true;
@@ -137,7 +137,7 @@ namespace Asd2UI.Xml.Converters
                 result = default;
                 return false;
             }
-            if (float.TryParse(value, out var single))
+            if (!value.Contains(',') && float.TryParse(value, out var single))
             {
                 result = new Vector3F(single, single, single);
                 return true;
@@ -161,7 +161,7 @@ namespace Asd2UI.Xml.Converters
                 result = default;
                 return false;
             }
-            if (int.TryParse(value, out var single))
+            if (!value.Contains(',') && int.TryParse(value, out var single))
             {
                 result = new Vector3I(single, single, single);
                 return true;
@@ -185,7 +185,7 @@ namespace Asd2UI.Xml.Converters
                 result = default;
                 return false;
             }
-            if (float.TryParse(value, out var single))
+            if (!value.Contains(',') && float.TryParse(value, out var single))
             {
                 result = new Vector4F(single, single, single, single);
                 return true;
@@ -209,7 +209,7 @@ namespace Asd2UI.Xml.Converters
                 result = default;
                 return false;
             }
-            if (int.TryParse(value, out var single))
+            if (!value.Contains(',') && int.TryParse(value, out var single))
             {
                 result = new Vector4I(single, single, single, single);
                 return true;
@@ -233,7 +233,7 @@ namespace Asd2UI.Xml.Converters
                 result = default;
                 return false;
             }
-            if (value.LastIndexOf('#') == 1)
+            if (value.LastIndexOf('#') == 0)
             {
                 if (value.Length == 7)
                 {
@@ -241,7 +241,7 @@ namespace Asd2UI.Xml.Converters
                         byte.TryParse(value.Substring(3, 2), NumberStyles.HexNumber, null, out var g) &&
                         byte.TryParse(value.Substring(5, 2), NumberStyles.HexNumber, null, out var b))
                     {
-                        result = new Color(r, b, g);
+                        result = new Color(r, g, b);
                         return true;
                     }
                 }
@@ -252,7 +252,7 @@ namespace Asd2UI.Xml.Converters
                         int.TryParse(value.Substring(5, 2), NumberStyles.HexNumber, null, out var b) &&
                         int.TryParse(value.Substring(7, 2), NumberStyles.HexNumber, null, out var a))
                     {
-                        result = new Color(r, b, g, a);
+                        result = new Color(r, g, b, a);
                         return true;
                     }
                 }
@@ -289,7 +289,7 @@ namespace Asd2UI.Xml.Converters
                 result = default;
                 return false;
             }
-            if (float.TryParse(value, out var single))
+            if (!value.Contains(',') && float.TryParse(value, out var single))
             {
                 result = new RectF(single, single, single, single);
                 return true;
@@ -324,7 +324,7 @@ namespace Asd2UI.Xml.Converters
                 result = default;
                 return false;
             }
-            if (int.TryParse(value, out var single))
+            if (!value.Contains(',') && int.TryParse(value, out var single))
             {
                 result = new RectI(single, single, single, single);
                 return true;

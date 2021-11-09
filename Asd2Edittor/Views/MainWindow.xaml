@@ -43,6 +43,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="400"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -64,17 +65,23 @@
 
             </MenuItem>-->
         </Menu>
-        <WindowsFormsHost x:Name="host" Grid.Column="0" Grid.Row="1">
+        <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" VerticalAlignment="Center" Content="更新" Command="{Binding Path=UpdateText}"/>
+        </Grid>
+        <WindowsFormsHost x:Name="host" Grid.Column="0" Grid.Row="2">
             <forms:Control x:Name="asdViewer"/>
         </WindowsFormsHost>
-        <GridSplitter Grid.Row="2" Style="{StaticResource HorizontalGridSplitter}" />
-        <TextBox Grid.Column="0" Grid.Row="3" AcceptsReturn="True" AcceptsTab="True" Background="{DynamicResource ResourceKey=BGColor2}" Foreground="{DynamicResource ResourceKey=TextColor}" FontFamily="ＭＳ ゴシック" Text="{Binding Path=Text.Value, UpdateSourceTrigger=Explicit}">
+        <GridSplitter Grid.Row="3" Style="{StaticResource HorizontalGridSplitter}" />
+        <TextBox Grid.Column="0" Grid.Row="4" AcceptsReturn="True" AcceptsTab="True" Background="{DynamicResource ResourceKey=BGColor2}" Foreground="{DynamicResource ResourceKey=TextColor}" FontFamily="ＭＳ ゴシック" Text="{Binding Path=Text.Value, UpdateSourceTrigger=Explicit}">
             <bh:Interaction.Behaviors>
                 <beh:MainTextBoxBehavior/>
             </bh:Interaction.Behaviors>
         </TextBox>
-        <GridSplitter Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Style="{StaticResource ResourceKey=VerticalGridSplitter}"/>
-        <TreeView Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" Background="Transparent" ItemsSource="{Binding Path=Files}">
+        <GridSplitter Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" Style="{StaticResource ResourceKey=VerticalGridSplitter}"/>
+        <TreeView Grid.Column="2" Grid.Row="2" Grid.RowSpan="3" Background="Transparent" ItemsSource="{Binding Path=Files}">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="vm:FilePathViewModel" ItemsSource="{Binding Path=Children}">
                     <TextBlock Foreground="{DynamicResource ResourceKey=TextColor}" Text="{Binding Path=Name.Value}"/>

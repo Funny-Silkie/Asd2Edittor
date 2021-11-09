@@ -1,3 +1,4 @@
+using Asd2Edittor.Altseed2;
 using Asd2Edittor.Messangers;
 using Asd2Edittor.Models;
 using Asd2UI.Xml;
@@ -121,8 +122,18 @@ namespace Asd2Edittor.ViewModels
                 switch (t.MessageType)
                 {
                     case MessageType.OnFinishUpdateText:
+                        if (string.IsNullOrEmpty(Text.Value))
+                        {
+                            AltseedManager.Current.SetNode(null);
+                            break;
+                        }
                         var reader = new AsdXmlReader();
                         var entry = reader.ToXmlEntry(Text.Value);
+                        if (entry != null)
+                        {
+                            var node = reader.ToNode(entry);
+                            AltseedManager.Current.SetNode(node);
+                        }
                         break;
                 }
             }

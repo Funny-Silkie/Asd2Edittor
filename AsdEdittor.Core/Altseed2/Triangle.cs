@@ -70,6 +70,7 @@ namespace Asd2UI.Altseed2
                 if (Point1 == value) return;
                 triangleNode.Point1 = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(Point1)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ContentSize)));
             }
         }
         /// <summary>
@@ -83,6 +84,7 @@ namespace Asd2UI.Altseed2
                 if (Point2 == value) return;
                 triangleNode.Point2 = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(Point2)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ContentSize)));
             }
         }
         /// <summary>
@@ -96,6 +98,20 @@ namespace Asd2UI.Altseed2
                 if (Point3 == value) return;
                 triangleNode.Point3 = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(Point3)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ContentSize)));
+            }
+        }
+        /// <summary>
+        /// 重ね順を取得または設定する
+        /// </summary>
+        public int ZOrder
+        {
+            get => triangleNode.ZOrder;
+            set
+            {
+                if (ZOrder == value) return;
+                triangleNode.ZOrder = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ZOrder)));
             }
         }
         /// <summary>
@@ -106,7 +122,5 @@ namespace Asd2UI.Altseed2
             triangleNode = new TriangleNode();
             InnerTransformNode.AddChildNode(triangleNode);
         }
-        /// <inheritdoc/>
-        protected override TransformNode CreateInnerNode() => new TriangleNode();
     }
 }
