@@ -13,9 +13,9 @@ namespace Asd2UI.Xml
         /// </summary>
         public IList<XmlEntry> Children { get; }
         /// <summary>
-        /// フィールドを取得する
+        /// メンバを取得する
         /// </summary>
-        public IDictionary<string, string> Fields { get; }
+        public IDictionary<string, string> Members { get; }
         /// <summary>
         /// 名前を取得する
         /// </summary>
@@ -32,7 +32,7 @@ namespace Asd2UI.Xml
             if (name.Length == 0) throw new ArgumentException("空文字です", nameof(name));
             Name = name;
             Children = new List<XmlEntry>();
-            Fields = new Dictionary<string, string>();
+            Members = new Dictionary<string, string>();
         }
         /// <summary>
         /// <see cref="XmlEntry"/>の新しいインスタンスを初期化する
@@ -48,7 +48,7 @@ namespace Asd2UI.Xml
             if (name.Length == 0) throw new ArgumentException("空文字です", nameof(name));
             Name = name;
             Children = children ?? new List<XmlEntry>();
-            Fields = fields ?? new Dictionary<string, string>();
+            Members = fields ?? new Dictionary<string, string>();
         }
         /// <summary>
         /// xmlのテキストから<see cref="XmlEntry"/>の新しいインスタンスを生成する
@@ -70,7 +70,7 @@ namespace Asd2UI.Xml
             {
                 var attribute = values[i].SplitWithoutDoubleQuotation('=');
                 if (attribute.Count != 2) throw new XmlParseException("フィールドの記法が無効です");
-                result.Fields.Add(attribute[0], attribute[1].Trim('"'));
+                result.Members.Add(attribute[0], attribute[1].Trim('"'));
             }
             if (name == tail)
             {

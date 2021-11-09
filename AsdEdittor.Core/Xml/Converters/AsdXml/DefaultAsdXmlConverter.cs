@@ -38,7 +38,7 @@ namespace Asd2UI.Xml.Converters
         public override bool Convert(XmlEntry xml, AsdXmlReader reader, out T result)
         {
             result = CreateInstance(reader);
-            SetFields(result, reader, xml.Fields);
+            SetMembers(result, reader, xml.Members);
             var children = xml.Children
                 .Select(x =>
                 {
@@ -58,19 +58,29 @@ namespace Asd2UI.Xml.Converters
         /// <remarks>デフォルトだと何も行われない</remarks>
         protected virtual void SetChildren(in T value, AsdXmlReader reader, IEnumerable<object> children) { }
         /// <summary>
-        /// フィールドを設定する
+        /// メンバを設定する
         /// </summary>
-        /// <param name="value">フィールドの設定を行う<typeparamref name="T"/>のインスタンス</param>
+        /// <param name="value">メンバの設定を行う<typeparamref name="T"/>のインスタンス</param>
         /// <param name="reader">使用する<see cref="AsdXmlReader"/>のインスタンス</param>
-        /// <param name="fields"><paramref name="value"/>に設定されるフィールドのコレクション</param>
-        protected virtual void SetFields(in T value, AsdXmlReader reader, IDictionary<string, string> fields)
+        /// <param name="fields"><paramref name="value"/>に設定されるメンバのコレクション</param>
+        protected virtual void SetMembers(in T value, AsdXmlReader reader, IDictionary<string, string> fields)
         {
             foreach (var (fieldName, fieldString) in fields)
             {
                 var fieldInfo = typeof(T).GetField(fieldName, reflectionFlags);
-                var fieldConverter = reader.TextValueConverterProvider.GetConverter(fieldInfo.FieldType);
-                if (!fieldConverter.Convert(fieldString, fieldInfo.FieldType, out var fieldValue)) throw new XmlParseException("フィールドの復元に失敗しました");
-                fieldInfo.SetValue(value, fieldValue);
+                if (fieldInfo == null)
+                {
+                    var propertyInfo = typeof(T).GetProperty(fieldName, reflectionFlags);
+                    var propertyConverter = reader.TextValueConverterProvider.GetConverter(propertyInfo.PropertyType);
+                    if (!propertyConverter.Convert(fieldString, propertyInfo.PropertyType, out var propertyValue)) throw new XmlParseException("プロパティの復元に失敗しました");
+                    fieldInfo.SetValue(value, propertyValue);
+                }
+                else
+                {
+                    var fieldConverter = reader.TextValueConverterProvider.GetConverter(fieldInfo.FieldType);
+                    if (!fieldConverter.Convert(fieldString, fieldInfo.FieldType, out var fieldValue)) throw new XmlParseException("フィールドの復元に失敗しました");
+                    fieldInfo.SetValue(value, fieldValue);
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Altseed2;
+using Asd2UI.Altseed2;
 using System;
 using System.Collections.Generic;
 
@@ -27,9 +28,16 @@ namespace Asd2UI.Xml.Converters
         protected override void SetChildren(in TNode value, AsdXmlReader reader, IEnumerable<object> children)
         {
             if (value == null) return;
-            foreach (var current in children)
-                if (current is Node child)
-                    value.AddChildNode(child);
+            if (value is UINode ui)
+            {
+                foreach (var current in children)
+                    if (current is Node child)
+                        ui.InnerTransformNode.AddChildNode(child);
+            }
+            else
+                foreach (var current in children)
+                    if (current is Node child)
+                        value.AddChildNode(child);
         }
     }
 }
