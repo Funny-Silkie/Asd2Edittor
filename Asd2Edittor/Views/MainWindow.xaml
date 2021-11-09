@@ -57,14 +57,12 @@
                 <Separator/>
                 <MenuItem Header="終了(_X)" InputGestureText="Ctrl+W" Command="{Binding Path=CloseWindow}"/>
             </MenuItem>
-            <MenuItem Header="編集(_E)">
+            <!--<MenuItem Header="編集(_E)">
 
             </MenuItem>
             <MenuItem Header="表示(_V)">
 
-            </MenuItem>
-            <MenuItem Header="{Binding ElementName=asdViewer, Path=Width}"/>
-            <MenuItem Header="{Binding ElementName=asdViewer, Path=Height}"/>
+            </MenuItem>-->
         </Menu>
         <WindowsFormsHost x:Name="host" Grid.Column="0" Grid.Row="1">
             <forms:Control x:Name="asdViewer"/>

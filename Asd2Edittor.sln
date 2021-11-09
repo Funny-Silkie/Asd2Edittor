@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{73019F55-561E-48FB-905D-EB4447D981CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsdViewer", "AsdViewer\AsdViewer.csproj", "{D07A265E-C6FA-42AC-A882-E91559F69E3A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,10 +32,6 @@ Global
 		{73019F55-561E-48FB-905D-EB4447D981CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73019F55-561E-48FB-905D-EB4447D981CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73019F55-561E-48FB-905D-EB4447D981CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D07A265E-C6FA-42AC-A882-E91559F69E3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D07A265E-C6FA-42AC-A882-E91559F69E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D07A265E-C6FA-42AC-A882-E91559F69E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D07A265E-C6FA-42AC-A882-E91559F69E3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

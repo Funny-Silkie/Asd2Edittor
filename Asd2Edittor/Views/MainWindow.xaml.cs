@@ -1,18 +1,13 @@
-﻿using Asd2Edittor.ViewModels;
+﻿using Asd2Edittor.Altseed2;
+using Asd2Edittor.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Asd2Edittor.Views
 {
@@ -43,15 +38,8 @@ namespace Asd2Edittor.Views
         {
             InitializeComponent();
             {
-                var p = Process.Start(new ProcessStartInfo
-                {
-                    FileName = "AsdViewer.exe",
-
-                    // HiddenとしたいがMainWindowHandleが0になる
-                    // FindWindowで探す必要あり 面倒なのでMinimized
-                    //WindowStyle = ProcessWindowStyle.Hidden,
-                    WindowStyle = ProcessWindowStyle.Minimized,
-                });
+                AltseedManager.Current.Initialize(726, 500);
+                var p = Process.GetProcessesByName("Asd2Edittor")[0];
                 p.WaitForInputIdle();
                 Thread.Sleep(100);
 
@@ -62,7 +50,10 @@ namespace Asd2Edittor.Views
 
                 SetParent(p.MainWindowHandle, asdViewer.Handle);
 
+                AltseedManager.Current.Loop();
+
                 asdViewer.SizeChanged += (s, e) => MoveWindow(p.MainWindowHandle, 0, 0, asdViewer.Width, asdViewer.Height, 1);
+                Closed += (x, y) => p.Kill();
             }
         }
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
