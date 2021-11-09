@@ -91,6 +91,10 @@ namespace Asd2UI.Xml
         {
             switch (name)
             {
+                case nameof(Circle): return typeof(Circle);
+                case nameof(Line): return typeof(Line);
+                case nameof(Rectangle): return typeof(Rectangle);
+                case nameof(Triangle): return typeof(Triangle);
                 default: return null;
             }
         }
