@@ -37,8 +37,8 @@ namespace Asd2Edittor.Views
         public MainWindow()
         {
             InitializeComponent();
+            if (AltseedManager.Current.Initialize(726, 500))
             {
-                AltseedManager.Current.Initialize(726, 500);
                 var p = Process.GetProcessesByName("Asd2Edittor")[0];
                 p.WaitForInputIdle();
                 Thread.Sleep(100);

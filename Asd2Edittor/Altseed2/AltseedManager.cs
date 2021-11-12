@@ -12,10 +12,11 @@ namespace Asd2Edittor.Altseed2
         private readonly ConcurrentQueue<Action> actions = new ConcurrentQueue<Action>();
         private UINode uINode;
         private AltseedManager() { }
-        public void Initialize(int width, int height)
+        public bool Initialize(int width, int height)
         {
-            if (!Engine.Initialize("", width, height)) return;
+            if (!Engine.Initialize("", width, height)) return false;
             Engine.ClearColor = new Color(200, 200, 200);
+            return true;
         }
         public async void Loop()
         {
