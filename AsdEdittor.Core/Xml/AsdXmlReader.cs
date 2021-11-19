@@ -1,4 +1,5 @@
-﻿using Asd2UI.Altseed2;
+﻿using Altseed2;
+using Asd2UI.Altseed2;
 using Asd2UI.Xml.Converters;
 using System;
 using System.Collections.Generic;
@@ -91,10 +92,24 @@ namespace Asd2UI.Xml
         {
             switch (name)
             {
+                // UINodes
                 case nameof(Circle): return typeof(Circle);
                 case nameof(Line): return typeof(Line);
+                case nameof(Polygon): return typeof(Polygon);
                 case nameof(Rectangle): return typeof(Rectangle);
                 case nameof(Triangle): return typeof(Triangle);
+                // Altseed2
+                case nameof(Vertex): return typeof(Vertex);
+                case nameof(Vector2F): return typeof(Vector2F);
+                case nameof(Vector2I): return typeof(Vector2I);
+                case nameof(Vector3F): return typeof(Vector3F);
+                case nameof(Vector3I): return typeof(Vector3I);
+                case nameof(Vector4F): return typeof(Vector4F);
+                case nameof(Vector4I): return typeof(Vector4I);
+                case nameof(RectF): return typeof(RectF);
+                case nameof(RectI): return typeof(RectI);
+                // Others
+                case "Array": return typeof(object[]);
                 default: return null;
             }
         }
