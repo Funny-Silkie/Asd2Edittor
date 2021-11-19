@@ -27,6 +27,7 @@ namespace Asd2UI.Xml.Converters
         /// <inheritdoc/>
         protected override void SetChildren(in TNode value, AsdXmlReader reader, IEnumerable<object> children)
         {
+            base.SetChildren(value, reader, children);
             if (value == null) return;
             if (value is UINode ui)
             {
