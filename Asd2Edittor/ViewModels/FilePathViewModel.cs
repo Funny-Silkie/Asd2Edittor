@@ -1,6 +1,4 @@
-﻿using Asd2Edittor.Messangers;
-using Asd2Edittor.Models;
-using fslib3.WPF;
+﻿using fslib3.WPF;
 using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
@@ -100,7 +98,10 @@ namespace Asd2Edittor.ViewModels
             OpenFile.Subscribe(CommandOpenFile);
         }
         public ReactiveCommand DeleteFile { get; } = new ReactiveCommand();
-        private void CommandDeleteFile() => File.Delete(FullPath);
+        private void CommandDeleteFile()
+        {
+            if (File.Exists(FullPath)) File.Delete(FullPath);
+        }
         public ReactiveCommand OpenFile { get; } = new ReactiveCommand();
         private void CommandOpenFile()
         {

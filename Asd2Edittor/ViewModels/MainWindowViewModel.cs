@@ -54,6 +54,9 @@ namespace Asd2Edittor.ViewModels
         }
         private FilePathViewModel FindFile(string path)
         {
+            var a = Path.GetFullPath(path)
+                .Replace('/', '\\')
+                .Replace(Root.FullPath, string.Empty);
             var names = Path.GetFullPath(path)
                 .Replace('/', '\\')
                 .Replace(Root.FullPath, string.Empty)
@@ -106,9 +109,7 @@ namespace Asd2Edittor.ViewModels
         }
         private void OnDeleteFile(string path)
         {
-            path = Path.GetFullPath(path)
-                .Replace('/', '\\')
-                .Replace(Root.FullPath, string.Empty);
+            path = Path.GetFullPath(path);
             var vm = FindFile(path);
             if (vm == Root) return;
             vm.Parent.Value.RemoveChild(vm);
