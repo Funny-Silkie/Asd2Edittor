@@ -104,7 +104,8 @@ namespace Asd2Edittor.ViewModels
         public ReactiveCommand OpenFile { get; } = new ReactiveCommand();
         private void CommandOpenFile()
         {
-
+            if (!File.Exists(FullPath)) return;
+            main.OpenAsdXml(FullPath);
         }
         #endregion
     }

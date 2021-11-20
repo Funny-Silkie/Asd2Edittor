@@ -58,7 +58,9 @@ namespace Asd2Edittor.Views
         }
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            var treeViewItem = (TreeViewItem)sender;
+            var dataContext = (FilePathViewModel)treeViewItem.DataContext;
+            dataContext.OpenFile.Execute();
         }
         private void TreeViewItem_KeyDown(object sender, KeyEventArgs e)
         {

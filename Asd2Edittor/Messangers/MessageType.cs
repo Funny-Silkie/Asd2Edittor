@@ -3,7 +3,12 @@
     public enum MessageType
     {
         CloseWindow,
+        TextBoxChanged,
+        SaveText,
         UpdateText,
-        OnFinishUpdateText,
+        OnSaveTextFinish,
+        OnUpdateTextFinish,
+        GetTextBoxValue,
+        OnGetTextBoxValueFinish,
     }
 }

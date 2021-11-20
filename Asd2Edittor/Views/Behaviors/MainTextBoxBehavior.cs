@@ -12,12 +12,32 @@ namespace Asd2Edittor.Views.Behaviors
         }
         protected override void MessangerOnNext(MessageInfo message)
         {
-            if (message is not TypedMessage m) return;
-            switch (m.MessageType)
+            switch (message)
             {
-                case MessageType.UpdateText:
-                    AssociatedObject.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                    RxMessanger.Default.Send(MessageType.OnFinishUpdateText);
+                case TypedMessage m:
+                    switch (m.MessageType)
+                    {
+                        case MessageType.SaveText:
+                            AssociatedObject.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                            RxMessanger.Default.Send(MessageType.OnSaveTextFinish);
+                            break;
+                        case MessageType.UpdateText:
+                            AssociatedObject.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                            RxMessanger.Default.Send(MessageType.OnUpdateTextFinish);
+                            break;
+                    }
+                    break;
+                case DictionaryMessage m:
+                    if (m.Values.TryGetValue("Type", out var _d_type))
+                    {
+                        if (_d_type is MessageType d_type && d_type == MessageType.GetTextBoxValue)
+                        {
+                            m.Values["Text"] = AssociatedObject.Text;
+                            m.Values["Type"] = MessageType.OnGetTextBoxValueFinish;
+                            RxMessanger.Default.Send(m.Values);
+                            break;
+                        }
+                    }
                     break;
             }
         }
@@ -26,12 +46,14 @@ namespace Asd2Edittor.Views.Behaviors
             base.OnAttached();
             AssociatedObject.PreviewTextInput += OnPreviewTextInput;
             AssociatedObject.PreviewKeyDown += OnPreviewKeyDown;
+            AssociatedObject.TextChanged += OnTextChanged;
         }
         protected override void OnDetaching()
         {
             base.OnDetaching();
             AssociatedObject.PreviewTextInput -= OnPreviewTextInput;
             AssociatedObject.PreviewKeyDown -= OnPreviewKeyDown;
+            AssociatedObject.TextChanged -= OnTextChanged;
         }
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -104,6 +126,10 @@ namespace Asd2Edittor.Views.Behaviors
 
                     break;
             }
+        }
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            RxMessanger.Default.Send(("Type", MessageType.TextBoxChanged), ("Text", AssociatedObject.Text));
         }
         private void CtrlD()
         {
