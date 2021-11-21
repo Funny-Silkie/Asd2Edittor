@@ -1,14 +1,14 @@
-﻿<Polygon Position="100,100">
+﻿<Polygon Position="100,100" Scale="1,2">
     <Polygon.Vertexes>
         <Array[Vertex]>
-            <Vertex Position="0,0,0" Color="#FF0000"/>
-            <Vertex Position="20,10,0" Color="#FF0000"/>
-            <Vertex Position="40,0,0" Color="#FF0000"/>
-            <Vertex Position="30,20,0" Color="#FF0000"/>
-            <Vertex Position="40,40,0" Color="#FF0000"/>
-            <Vertex Position="20,30,0" Color="#FF0000"/>
-            <Vertex Position="0,40,0" Color="#FF0000"/>
-            <Vertex Position="10,20,0" Color="#FF0000"/>
+            <Vertex Position="50,30,0" Color="#FFFF00"/>
+            <Vertex Position="100,30,0" Color="#FFFF00"/>
+            <Vertex Position="100,0,0" Color="#FFFF00"/>
+            <Vertex Position="75,10,0" Color="#FFFF00"/>
+            <Vertex Position="50,0,0" Color="#FFFF00"/>
+            <Vertex Position="25,10,0" Color="#FFFF00"/>
+            <Vertex Position="0,0,0" Color="#FFFF00"/>
+            <Vertex Position="0,30,0" Color="#FFFF00"/>
         </Array[Vertex]>
     </Polygon.Vertexes>
 </Polygon>
