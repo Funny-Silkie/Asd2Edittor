@@ -54,9 +54,6 @@ namespace Asd2Edittor.ViewModels
         }
         private FilePathViewModel FindFile(string path)
         {
-            var a = Path.GetFullPath(path)
-                .Replace('/', '\\')
-                .Replace(Root.FullPath, string.Empty);
             var names = Path.GetFullPath(path)
                 .Replace('/', '\\')
                 .Replace(Root.FullPath, string.Empty)

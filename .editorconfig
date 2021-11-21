@@ -23,3 +23,6 @@ dotnet_diagnostic.IDE0010.severity = silent
 
 # IDE0130: Namespace がフォルダー構造と一致しません
 dotnet_diagnostic.IDE0130.severity = none
+
+# CA1822: メンバーを static に設定します
+dotnet_diagnostic.CA1822.severity = none
