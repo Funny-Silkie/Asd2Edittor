@@ -32,6 +32,7 @@
             <Setter Property="Background" Value="Transparent"/>
         </Style>
         <vm:VisibilityConverter x:Key="VisibilityConverter"/>
+        <vm:SaveFileMenuHeaderConverter x:Key="SaveFileMenuHeaderConverter"/>
     </Window.Resources>
     <bh:Interaction.Behaviors>
         <beh:MainWindowBehavior/>
@@ -54,8 +55,7 @@
             <MenuItem Header="ファイル(_F)">
                 <MenuItem Header="新規(_N)" InputGestureText="Ctrl+N"/>
                 <MenuItem Header="開く(_O)" InputGestureText="Ctrl+O" Command="{Binding Path=MenuFolderOpen}"/>
-                <MenuItem Header="上書き保存(_S)" InputGestureText="Ctrl+S"/>
-                <MenuItem Header="名前を付けて保存(_A)" InputGestureText="Ctrl+Shift+S"/>
+                <MenuItem Header="{Binding Path=EditTextFileName.Value, Converter={StaticResource ResourceKey=SaveFileMenuHeaderConverter}}" InputGestureText="Ctrl+S" Command="{Binding Path=SaveText}"/>
                 <Separator/>
                 <MenuItem Header="終了(_X)" InputGestureText="Ctrl+W" Command="{Binding Path=CloseWindow}"/>
             </MenuItem>
@@ -91,7 +91,7 @@
             <forms:Control x:Name="asdViewer"/>
         </WindowsFormsHost>
         <GridSplitter Grid.Row="3" Style="{StaticResource HorizontalGridSplitter}" />
-        <TextBox Grid.Column="0" Grid.Row="4" AcceptsReturn="True" AcceptsTab="True" Background="{DynamicResource ResourceKey=BGColor2}" Foreground="{DynamicResource ResourceKey=TextColor}" FontFamily="ＭＳ ゴシック" Text="{Binding Path=Text.Value, UpdateSourceTrigger=Explicit}">
+        <TextBox Grid.Column="0" Grid.Row="4" AcceptsReturn="True" AcceptsTab="True" Background="{DynamicResource ResourceKey=BGColor2}" Foreground="{DynamicResource ResourceKey=TextColor}" FontFamily="ＭＳ ゴシック" Text="{Binding Path=Text.Value, UpdateSourceTrigger=Explicit}" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" TextWrapping="NoWrap">
             <bh:Interaction.Behaviors>
                 <beh:MainTextBoxBehavior/>
             </bh:Interaction.Behaviors>

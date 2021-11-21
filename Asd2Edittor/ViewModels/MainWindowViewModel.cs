@@ -1,4 +1,4 @@
-using Asd2Edittor.Altseed2;
+ï»¿using Asd2Edittor.Altseed2;
 using Asd2Edittor.Messangers;
 using Asd2Edittor.Models;
 using Asd2UI.Xml;
@@ -177,8 +177,8 @@ namespace Asd2Edittor.ViewModels
                                         var prev = Text.Value;
                                         var next = (string)d.Values["Text"];
                                         if (prev != next)
-                                            if (MessageBox.Show("•Û‘¶‚³‚ê‚Ä‚¢‚È‚¢•ÏX‚ª‚ ‚è‚Ü‚·@‚¢‚¢‚Å‚·‚©H") != MessageBoxResult.OK)
-                                                return;
+                                            if (MessageBox.Show("ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ÏXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½ï¿½H") != MessageBoxResult.OK)
+                                                break;
                                         if (d.Values.TryGetValue("Path", out var _d_path))
                                         {
                                             var d_path = _d_path as string;
@@ -191,6 +191,7 @@ namespace Asd2Edittor.ViewModels
                                     }
                                 case MessageType.TextBoxChanged:
                                     {
+                                        if (!SaveText.CanExecute()) break;
                                         var prev = Text.Value;
                                         var next = (string)d.Values["Text"];
                                         TextSaved.Value = prev == next;
@@ -205,13 +206,16 @@ namespace Asd2Edittor.ViewModels
         protected override void InitializeCommands()
         {
             base.InitializeCommands();
+
+            SaveText = new ReactiveCommand(EditTextPath.Select(x => !string.IsNullOrEmpty(x)));
+
             SaveText.Subscribe(CommandSaveText);
             UpdateText.Subscribe(CommandUpdateText);
             MenuFolderOpen.Subscribe(CommandMenuFolderOpen);
             CloseWindow.Subscribe(CommandCloseWindow);
             OnWindowClosing.Subscribe(CommandOnWindowClosing);
         }
-        public ReactiveCommand SaveText { get; } = new ReactiveCommand();
+        public ReactiveCommand SaveText { get; private set; }
         private void CommandSaveText()
         {
             RxMessanger.Default.Send(MessageType.SaveText);
