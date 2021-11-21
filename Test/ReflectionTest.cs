@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -29,6 +30,13 @@ namespace Test
                     writer.WriteLine(type.FullName);
                 }
             }
+        }
+        [Test]
+        public void TypeMatching()
+        {
+            Assert.AreEqual(typeof(ICollection<>), typeof(ICollection<>));
+            Assert.AreNotEqual(typeof(ICollection<>), typeof(ICollection<int>));
+            Assert.AreEqual(typeof(ICollection<>), typeof(ICollection<int>).GetGenericTypeDefinition());
         }
     }
 }

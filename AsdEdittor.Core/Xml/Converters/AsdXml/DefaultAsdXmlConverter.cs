@@ -23,7 +23,7 @@ namespace Asd2UI.Xml.Converters
         /// <param name="reader">使用する<see cref="AsdXmlReader"/>のインスタンス</param>
         /// <exception cref="InvalidOperationException"><typeparamref name="T"/>に引数無しコンストラクタが定義されていない</exception>
         /// <returns><typeparamref name="T"/>の新しいインスタンス</returns>
-        protected virtual T CreateInstance(AsdXmlReader reader)
+        protected virtual object CreateInstance(AsdXmlReader reader)
         {
             try
             {
@@ -35,16 +35,17 @@ namespace Asd2UI.Xml.Converters
             }
         }
         /// <inheritdoc/>
-        public override bool Convert(XmlEntry xml, AsdXmlReader reader, out T result)
+        public override bool Convert(XmlEntry xml, AsdXmlReader reader, out object result)
         {
-            result = CreateInstance(reader);
+            result = (T)CreateInstance(reader);
             SetTextMembers(result, reader, xml.Members);
             var xmlMembers = xml.Children
                 .Where(x =>
                 {
                     var array = x.Name.Split('.');
                     return array.Length == 2 && array[0] == xml.Name;
-                });
+                })
+                .Select(x => new XmlEntry(x.Name[(xml.Name.Length + 1)..], x.Children, x.Members));
             SetXmlMembers(result, reader, xmlMembers);
             var children = xml.Children
                 .Where(x => !x.Name.Contains('.'))
@@ -64,14 +65,14 @@ namespace Asd2UI.Xml.Converters
         /// <param name="reader">使用する<see cref="AsdXmlReader"/>のインスタンス</param>
         /// <param name="children"><paramref name="value"/>に設定される子要素のコレクション</param>
         /// <remarks>デフォルトだと何も行われない</remarks>
-        protected virtual void SetChildren(in T value, AsdXmlReader reader, IEnumerable<object> children) { }
+        protected virtual void SetChildren(in object value, AsdXmlReader reader, IEnumerable<object> children) { }
         /// <summary>
         /// メンバを設定する
         /// </summary>
         /// <param name="value">メンバの設定を行う<typeparamref name="T"/>のインスタンス</param>
         /// <param name="reader">使用する<see cref="AsdXmlReader"/>のインスタンス</param>
         /// <param name="members"><paramref name="value"/>に設定されるメンバのコレクション</param>
-        protected virtual void SetTextMembers(in T value, AsdXmlReader reader, IDictionary<string, string> members)
+        protected virtual void SetTextMembers(in object value, AsdXmlReader reader, IDictionary<string, string> members)
         {
             foreach (var (fieldName, fieldString) in members)
             {
@@ -98,23 +99,22 @@ namespace Asd2UI.Xml.Converters
         /// <param name="reader">使用する<see cref="AsdXmlReader"/>のインスタンス</param>
         /// <param name="members"><paramref name="value"/>に設定されるメンバのコレクション</param>
         /// <exception cref="ArgumentException">メンバが存在しない，またはメンバがフィールド・プロパティ以外</exception>
-        protected virtual void SetXmlMembers(in T value, AsdXmlReader reader, IEnumerable<XmlEntry> members)
+        protected virtual void SetXmlMembers(in object value, AsdXmlReader reader, IEnumerable<XmlEntry> members)
         {
             foreach (var member in members)
             {
+                if (member.Children.Count != 1) throw new ArgumentException("値が複数設定されています", nameof(members));
+                var valueType = reader.NameToType(member.Children[0].Name);
+                if (!reader.AsdXmlConverterProvider.GetConverter(valueType).Convert(member.Children[0], valueType, reader, out var p)) throw new InvalidOperationException("復元に失敗しました");
                 var mInfo = typeof(T).GetMember(member.Name, reflectionFlags);
                 if (mInfo.IsEmptyValue()) throw new ArgumentException("メンバが存在しません", nameof(members));
                 switch (mInfo[0].MemberType)
                 {
                     case MemberTypes.Property:
-                        var property = (PropertyInfo)mInfo[0];
-                        reader.AsdXmlConverterProvider.GetConverter(property.PropertyType).Convert(member, property.PropertyType, reader, out var p);
-                        property.SetValue(value, p);
+                        ((PropertyInfo)mInfo[0]).SetValue(value, p);
                         break;
                     case MemberTypes.Field:
-                        var field = (FieldInfo)mInfo[0];
-                        reader.AsdXmlConverterProvider.GetConverter(field.FieldType).Convert(member, field.FieldType, reader, out var f);
-                        field.SetValue(value, f);
+                        ((FieldInfo)mInfo[0]).SetValue(value, p);
                         break;
                     default: throw new ArgumentException("メンバのタイプが無効です", nameof(members));
                 }

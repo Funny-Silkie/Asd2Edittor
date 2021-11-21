@@ -3,6 +3,7 @@ using Asd2UI.Altseed2;
 using Asd2UI.Xml.Converters;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Asd2UI.Xml
 {
@@ -90,6 +91,14 @@ namespace Asd2UI.Xml
         /// <returns><paramref name="name"/>に応じた型 見つからなかったら<see langword="null"/></returns>
         internal Type NameToType(string name)
         {
+            var genericStart = name.IndexOf('[');
+            var genericEnd = name.IndexOf(']');
+            var genericList = new List<string>();
+            if (genericStart >= 0 && genericEnd >= 0)
+            {
+                foreach (var current in name[(genericStart + 1)..genericEnd].Split(',').Select(x => x.Trim())) genericList.Add(current);
+                name = name[0..genericStart];
+            }
             switch (name)
             {
                 // UINodes
@@ -109,7 +118,7 @@ namespace Asd2UI.Xml
                 case nameof(RectF): return typeof(RectF);
                 case nameof(RectI): return typeof(RectI);
                 // Others
-                case "Array": return typeof(object[]);
+                case "Array": return NameToType(genericList[0]).MakeArrayType();
                 default: return null;
             }
         }

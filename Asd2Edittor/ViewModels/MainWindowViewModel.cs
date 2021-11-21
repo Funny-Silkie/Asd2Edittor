@@ -141,7 +141,7 @@ namespace Asd2Edittor.ViewModels
                     {
                         case MessageType.OnSaveTextFinish:
                         case MessageType.OnUpdateTextFinish:
-                            if (EditTextPath != null)
+                            if (!string.IsNullOrEmpty(EditTextPath.Value))
                             {
                                 using var writer = new StreamWriter(EditTextPath.Value, false, new UTF8Encoding(true, true));
                                 TextSaved.Value = true;

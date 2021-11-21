@@ -39,16 +39,16 @@ namespace Asd2UI.Xml
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="children">子要素</param>
-        /// <param name="fields">フィールド</param>
+        /// <param name="members">メンバ</param>
         /// <exception cref="ArgumentException"><paramref name="name"/>が空文字</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/>がnull</exception>
-        public XmlEntry(string name, IList<XmlEntry> children, IDictionary<string, string> fields)
+        public XmlEntry(string name, IList<XmlEntry> children, IDictionary<string, string> members)
         {
             if (name == null) throw new ArgumentNullException(nameof(name), "引数がnullです");
             if (name.Length == 0) throw new ArgumentException("空文字です", nameof(name));
             Name = name;
             Children = children ?? new List<XmlEntry>();
-            Members = fields ?? new Dictionary<string, string>();
+            Members = members ?? new Dictionary<string, string>();
         }
         /// <summary>
         /// xmlのテキストから<see cref="XmlEntry"/>の新しいインスタンスを生成する

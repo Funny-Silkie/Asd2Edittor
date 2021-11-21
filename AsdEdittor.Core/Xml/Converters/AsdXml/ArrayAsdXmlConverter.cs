@@ -21,7 +21,7 @@ namespace Asd2UI.Xml.Converters
         /// <inheritdoc/>
         public override bool CanParse(Type type) => type.IsArray;
         /// <inheritdoc/>
-        public override bool Convert(XmlEntry xml, AsdXmlReader reader, out Array result)
+        public override bool Convert(XmlEntry xml, AsdXmlReader reader, out object result)
         {
             var list = new List<object>();
             var converter = reader.AsdXmlConverterProvider.GetConverter(elementType);
@@ -30,8 +30,9 @@ namespace Asd2UI.Xml.Converters
                 converter.Convert(children, elementType, reader, out var element);
                 list.Add(element);
             }
-            result = Array.CreateInstance(elementType, list.Count);
-            for (int i = 0; i < list.Count; i++) result.SetValue(list[i], i);
+            var array = Array.CreateInstance(elementType, list.Count);
+            for (int i = 0; i < list.Count; i++) array.SetValue(list[i], i);
+            result = array;
             return true;
         }
     }

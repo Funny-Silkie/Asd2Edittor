@@ -54,7 +54,7 @@ namespace Asd2UI.Xml.Converters
         /// <param name="result">変換された値</param>
         /// <exception cref="ArgumentNullException"><paramref name="xml"/>がnull</exception>
         /// <returns><paramref name="xml"/>を変換出来たらtrue，それ以外でfalse</returns>
-        public abstract bool Convert(XmlEntry xml, AsdXmlReader reader, out T result);
+        public abstract bool Convert(XmlEntry xml, AsdXmlReader reader, out object result);
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Convert(XmlEntry xml, Type resultType, AsdXmlReader reader, out object result)

@@ -25,7 +25,7 @@ namespace Asd2UI.Xml.Converters
             return false;
         }
         /// <inheritdoc/>
-        protected override void SetChildren(in TNode value, AsdXmlReader reader, IEnumerable<object> children)
+        protected override void SetChildren(in object value, AsdXmlReader reader, IEnumerable<object> children)
         {
             base.SetChildren(value, reader, children);
             if (value == null) return;
@@ -38,7 +38,7 @@ namespace Asd2UI.Xml.Converters
             else
                 foreach (var current in children)
                     if (current is Node child)
-                        value.AddChildNode(child);
+                        ((Node)value).AddChildNode(child);
         }
     }
 }
