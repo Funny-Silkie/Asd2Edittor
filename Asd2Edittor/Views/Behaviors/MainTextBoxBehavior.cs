@@ -17,6 +17,9 @@ namespace Asd2Edittor.Views.Behaviors
                 case TypedMessage m:
                     switch (m.MessageType)
                     {
+                        case MessageType.ClearText:
+                            AssociatedObject.Clear();
+                            break;
                         case MessageType.SaveText:
                             AssociatedObject.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                             RxMessanger.Default.Send(MessageType.OnSaveTextFinish);

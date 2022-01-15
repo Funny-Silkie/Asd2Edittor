@@ -174,7 +174,7 @@ namespace Asd2Edittor.ViewModels
                                         var prev = Text.Value;
                                         var next = (string)d.Values["Text"];
                                         if (prev != next)
-                                            if (MessageBox.Show("�ۑ�����Ă��Ȃ��ύX������܂��@�����ł����H") != MessageBoxResult.OK)
+                                            if (MessageBox.Show("保存していないデータは失われます。よろしいですか？", null, MessageBoxButton.OKCancel) != MessageBoxResult.OK)
                                                 break;
                                         if (d.Values.TryGetValue("Path", out var _d_path))
                                         {
@@ -206,11 +206,18 @@ namespace Asd2Edittor.ViewModels
 
             SaveText = new ReactiveCommand(EditTextPath.Select(x => !string.IsNullOrEmpty(x)));
 
+            CreateNew.Subscribe(CommandCreateNew);
             SaveText.Subscribe(CommandSaveText);
             UpdateText.Subscribe(CommandUpdateText);
             MenuFolderOpen.Subscribe(CommandMenuFolderOpen);
             CloseWindow.Subscribe(CommandCloseWindow);
             OnWindowClosing.Subscribe(CommandOnWindowClosing);
+        }
+        public ReactiveCommand CreateNew { get; } = new ReactiveCommand();
+        private void CommandCreateNew()
+        {
+            EditTextPath.Value = null;
+            RxMessanger.Default.Send(MessageType.ClearText);
         }
         public ReactiveCommand SaveText { get; private set; }
         private void CommandSaveText()

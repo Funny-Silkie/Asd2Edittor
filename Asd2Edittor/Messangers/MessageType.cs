@@ -2,6 +2,7 @@
 {
     public enum MessageType
     {
+        ClearText,
         CloseWindow,
         TextBoxChanged,
         SaveText,

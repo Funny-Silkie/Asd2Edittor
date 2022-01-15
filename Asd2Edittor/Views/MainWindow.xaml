@@ -53,7 +53,7 @@
         </Grid.RowDefinitions>
         <Menu Background="Transparent" Foreground="{DynamicResource ResourceKey=TextColor}" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
             <MenuItem Header="ファイル(_F)">
-                <MenuItem Header="新規(_N)" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="新規(_N)" InputGestureText="Ctrl+N" Command="{Binding Path=CreateNew}"/>
                 <MenuItem Header="開く(_O)" InputGestureText="Ctrl+O" Command="{Binding Path=MenuFolderOpen}"/>
                 <MenuItem Header="{Binding Path=EditTextFileName.Value, Converter={StaticResource ResourceKey=SaveFileMenuHeaderConverter}}" InputGestureText="Ctrl+S" Command="{Binding Path=SaveText}"/>
                 <Separator/>
@@ -122,6 +122,7 @@
         </TreeView>
     </Grid>
     <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+N" Command="{Binding Path=CreateNew}"/>
         <KeyBinding Gesture="Ctrl+O" Command="{Binding Path=MenuFolderOpen}"/>
         <KeyBinding Gesture="Ctrl+W" Command="{Binding Path=CloseWindow}"/>
         <KeyBinding Gesture="Ctrl+S" Command="{Binding Path=SaveText}"/>
